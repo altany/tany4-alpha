@@ -1,3 +1,0 @@
-Placeholder for my personal website.
-
-Not yet started....
