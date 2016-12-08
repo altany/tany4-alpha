@@ -3,8 +3,11 @@ var app = express();
 
 app.set('port', (process.env.PORT || 5000));
 
+app.set('views', './views');
+app.set('view engine', 'jade')
+
 app.get('/', function (req, res) {
-  res.send('Hello World!')
+  res.render('index')
 })
 
 app.listen(app.get('port'), function () {
