@@ -15,19 +15,43 @@ body
 		.logo
 			width: 250px
 		.about
+			+transition(all 200ms ease-in-out)
 			width: calc(100% - 260px)
 			text-align: right
+			@include breakpoint(phablet)
+				padding: 20px 0
 			a
 				text-decoration: none
 				color: darkmagenta
 				font-size: 20px
 			.socialLogos
-				display: none
-				text-align: right
-				[class^="icon-"]
-					margin-left: 10px
-					font-size: 22px
-					color: #775e84
+				+transition(all 200ms)
+				color: #775e84
+			@include breakpoint(phablet)
+				a
+					float: right
+					position: relative
+				.socialLogos
+					opacity: 0
+					position: absolute
+					top: 10px
+					left: calc(50% - 10px)
+					text-align: initial
+					[class^="icon-"]
+						top: 0
+						position: absolute
+						+transition(all 500ms cubic-bezier(0.64, 0.57, 0.67, 1.53))
+					.icon-stackoverflow
+							right: 30px
+					.icon-github
+						left: 50px
+				&:hover
+					margin-top: -20px
+					.socialLogos
+						opacity: 1
+						[class^="icon-"]
+							top: 40px
+						
 		@include breakpoint(mobileonly)
 			.logo
 				width: 160px
@@ -37,7 +61,9 @@ body
 				.socialLink
 					display: none
 				.socialLogos
-					display: block
-					
+					text-align: right
+					[class^="icon-"]
+						margin-left: 10px
+						font-size: 22px
 	
 				
