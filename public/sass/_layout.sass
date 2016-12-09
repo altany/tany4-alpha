@@ -21,14 +21,23 @@ body
 				text-decoration: none
 				color: darkmagenta
 				font-size: 20px
-		.aboutMobile
-			display: none
+			.socialLogos
+				display: none
+				text-align: right
+				[class^="icon-"]
+					margin-left: 10px
+					font-size: 22px
+					color: #775e84
 		@include breakpoint(mobileonly)
 			.logo
-				width: 150px
+				width: 160px
 			.about
-				display: none
-			.aboutMobile
 				display: block
+				width: 100%
+				.socialLink
+					display: none
+				.socialLogos
+					display: block
+					
 	
 				
