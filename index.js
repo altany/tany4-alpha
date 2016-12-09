@@ -12,7 +12,9 @@ app.get('/', function (req, res) {
   res.render('index', {page:'home'});
 });
 
-
+app.get('/social', function (req, res) {
+  res.render('social', {page:'social'});
+});
 var sass = require('node-sass');
 
 app.get('/public/style.css', function(req, res, next) {
