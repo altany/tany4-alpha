@@ -1,3 +1,5 @@
+@import "mixins";
+
 body
 	margin: 0
 	*
@@ -19,3 +21,14 @@ body
 				text-decoration: none
 				color: darkmagenta
 				font-size: 20px
+		.aboutMobile
+			display: none
+		@include breakpoint(mobileonly)
+			.logo
+				width: 150px
+			.about
+				display: none
+			.aboutMobile
+				display: block
+	
+				
