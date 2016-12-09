@@ -24,4 +24,13 @@
 			@content
 	@else
 		@warn "Breakpoint mixin supports: laptop, tablet, phablet and mobileonly";
+
+
+
+@mixin transition($transition...) 
+    -moz-transition:    $transition
+    -o-transition:      $transition
+    -webkit-transition: $transition
+    transition:         $transition
+
   
