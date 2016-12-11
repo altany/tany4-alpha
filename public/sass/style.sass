@@ -2,8 +2,35 @@
 @import "iconmoon"
 
 #home
+	width: 70%	
+	margin: 0 auto
+	.greeting
+		margin-top: 40px
 	.profileImg
+		float: left
 		width: 300px
+		
 		img
 			max-width: 100%
 			height: auto
+	@include breakpoint(phablet)
+		.info
+			float: right
+			width: calc(100% - 350px)
+			a
+				display: none
+	@include breakpoint(mobileonly)
+		width: 95%
+		.profileImg
+			width: 110px
+			img
+				width: 100px
+		h1
+			font-size: 20px
+		h2
+			font-size: 15px
+		a
+			font-weight: bold
+			text-align: center
+			display: block
+			margin-top: 30px
