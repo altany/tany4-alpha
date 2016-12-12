@@ -1,8 +1,11 @@
 @import "mixins";
-a
-	text-decoration: none
-body
+$footerHeight: 40px
+html, body
+	height: 100%
 	margin: 0
+body
+	a
+		text-decoration: none
 	*
 		font-family: 'Open Sans', sans-serif
 	header
@@ -73,5 +76,12 @@ body
 					text-align: right
 					a
 						margin-left: 18px
-	
+	.wrapper
+		min-height: 100%
+		margin: 0 auto (-$footerHeight) /* the bottom margin is the negative value of the footer's height */
+	footer, .push
+		height: $footerHeight
+	footer
+		.copyright
+			float: right
 				

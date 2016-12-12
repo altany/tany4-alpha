@@ -6,8 +6,10 @@ html
 		link(rel='stylesheet', href='/public/style.css')
 		meta(name='viewport', content='width=device-width')
 	body
-		include ./shared/header
-		
-		block content
+		.wrapper
+			include ./shared/header
 
+			.pageContent(id=page?page:'')
+				block content
+			.push
 		include ./shared/footer
