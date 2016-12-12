@@ -2,31 +2,29 @@
 @import "iconmoon"
 
 #home
-	width: 70%	
 	margin: 0 auto
-	.greeting
-		margin-top: 40px
+	margin-top: 40px
 	.profileImg
 		float: left
-		width: 300px
+		width: 250px
 		
 		img
 			max-width: 100%
 			height: auto
 	@include breakpoint(phablet)
+		width: 70%	
 		.info
 			float: right
 			width: calc(100% - 350px)
 			a
 				display: none
 	@include breakpoint(mobileonly)
-		width: 95%
 		.profileImg
 			width: 120px
 			img
 				width: 100px
 		h1
-			font-size: 20px
+			font-size: 19px
 		h2
 			font-size: 15px
 		a
