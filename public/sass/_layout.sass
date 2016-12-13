@@ -77,17 +77,22 @@ body
 						margin-left: 18px
 	.wrapper
 		min-height: 100%
-		margin: 0 auto (-$footerHeight) /* the bottom margin is the negative value of the footer's height */
+		margin: 0 auto (-$footerHeight)
 	.pageContent
 		margin: 0 auto
+
 		&:after
 			content: ' '
 			display: block
 			clear: both
 		@include breakpoint(phablet)
-			width: 70%
+			width: 600px
+		@include breakpoint(desktop)
+			width: 1024px
+		@include breakpoint(tablet)
+			width: 800px
 		@include breakpoint(mobileonly)
-			width: 90%
+			padding: 0 5%
 	footer, .push
 		height: $footerHeight
 	footer
