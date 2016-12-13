@@ -27,6 +27,11 @@ app.get('/public/style.css', function(req, res, next) {
 	});
 });
 
+/* Host my CV as pdf */
+app.use('/TaniaPapazafeiropoulou-CV', express.static(__dirname + '/public/files/TaniaPapazafeiropoulouCV.pdf'));
+
+
+
 app.listen(app.get('port'), function () {
   console.log('App listening on port ' + app.get('port'));
 });
