@@ -1,5 +1,4 @@
-@import "mixins";
-$footerHeight: 40px
+@import "shared";
 html, body
 	height: 100%
 	margin: 0
@@ -57,11 +56,11 @@ body
 							top: 20px
 							&:hover
 								&.icon-stackoverflow
-									color: #f69c55
+									color: $stackOverflowOrange
 								&.icon-linkedin2
-									color: #0077b5
+									color: $linkedInBlue
 								&.icon-github
-									color: black
+									color: $githubBlack
 						
 		@include breakpoint(mobileonly)
 			.logo
