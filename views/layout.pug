@@ -5,10 +5,10 @@ html
 		link(href='https://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet')
 		link(rel='stylesheet', href='/public/style.css')
 		meta(name='viewport', content='width=device-width')
+		script(type='application/ld+json')!= JSON.stringify(ldJson)
 	body
 		script(src='https://code.jquery.com/jquery-3.1.1.min.js', integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=' crossorigin='anonymous')
 		script(src='js/script.js')
-		script(type='application/ld+json')!= JSON.stringify(ldJson)
 		
 		.wrapper
 			include ./shared/header
