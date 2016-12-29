@@ -6,16 +6,20 @@
 	.profileImg
 		float: left
 		width: 250px
-		
+		max-width: 30%
 		img
 			max-width: 100%
 			height: auto
+	.connect
+			font-weight: bold
+			text-align: center
+			display: block
+			margin-top: 50px
+			color: #ad1477
 	@include breakpoint(phablet)
 		.info
 			float: right
-			width: calc(100% - 350px)
-			a
-				display: none
+			width: 65%
 	@include breakpoint(mobileonly)
 		.profileImg
 			width: 120px
@@ -25,12 +29,9 @@
 			font-size: 19px
 		h2
 			font-size: 15px
-		a
-			font-weight: bold
-			text-align: center
-			display: block
-			margin-top: 50px
-			color: #ad1477
+.no-touch
+	.connect
+			display: none
 #social
 	h1
 		margin: 50px 0
