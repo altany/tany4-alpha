@@ -7,6 +7,9 @@ var ldJson = {
 	"description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
 	"description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
 	"url" : "tany4.com",
+	"brand" : "Tany4",
+	"email" : "hello@tany4.com",
+	"image" : "/images/profile.gif",
 	"sameAs" : [
 		"https://www.linkedin.com/in/taniapapazaf",
 		"https://www.github.com/altany",
