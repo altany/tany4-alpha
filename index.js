@@ -1,5 +1,18 @@
 var express = require('express');
 var app = express();
+var ldJson = {
+	"@context" : "http://schema.org",
+	"@type" : "Organization",
+	"name" : "Tania Papazafeiropoulou",
+	"description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
+	"description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
+	"url" : "tany4.com",
+	"sameAs" : [
+		"https://www.linkedin.com/in/taniapapazaf",
+		"https://www.github.com/altany",
+		"stackoverflow.com/story/tany4"
+	]
+};
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -9,11 +22,11 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-  res.render('index', {page:'home'});
+  res.render('index', {page:'home', ldJson: ldJson});
 });
 
 app.get('/social', function (req, res) {
-  res.render('social', {page:'social'});
+  res.render('social', {page:'social', ldJson: ldJson});
 });
 var sass = require('node-sass');
 
