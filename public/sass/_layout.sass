@@ -1,4 +1,4 @@
-@import "shared";
+@import "shared"
 html, body
 	height: 100%
 	margin: 0
@@ -29,52 +29,7 @@ body
 				a
 					color: #775e84
 					font-size: 25px
-			@include breakpoint(phablet)
-				.social
-					float: right
-					position: relative
-				.socialLogos
-					opacity: 0
-					position: absolute
-					top: 20px
-					left: calc(50% - 10px)
-					text-align: initial
-					a
-						top: 0
-						position: absolute
-						+transition(all 500ms cubic-bezier(0.64, 0.57, 0.67, 1.53))
-					.icon-stackoverflow
-							right: 25px
-					.icon-github
-						left: 45px
-				&:hover
-					margin-top: -30px
-					padding-bottom: 50px
-					.socialLogos
-						opacity: 1
-						a
-							top: 20px
-							&:hover
-								&.icon-stackoverflow
-									color: $stackOverflowOrange
-								&.icon-linkedin2
-									color: $linkedInBlue
-								&.icon-github
-									color: $githubBlack
-						
-		@include breakpoint(mobileonly)
-			.logo
-				width: 160px
-			.about
-				display: block
-				width: 100%
-				.socialLink
-					display: none
-				.socialLogos
-					text-align: right
-					a
-						margin-left: 18px
-	.wrapper
+    .wrapper
 		min-height: 100%
 		margin: 0 auto (-$footerHeight)
 	.pageContent
@@ -103,3 +58,58 @@ body
 			bottom: 5px
 			right: 5px
 				
+// No touch header
+body.no-touch
+    header
+        .about
+            .social
+                float: right
+                position: relative
+            .socialLogos
+                opacity: 0
+                position: absolute
+                top: 20px
+                left: calc(50% - 10px)
+                text-align: initial
+                a
+                    top: 0
+                    position: absolute
+                    +transition(all 500ms cubic-bezier(0.64, 0.57, 0.67, 1.53))
+                .icon-stackoverflow
+                        right: 25px
+                .icon-github
+                    left: 45px
+            &:hover
+                margin-top: -10px
+                padding-bottom: 50px
+                .socialLogos
+                    opacity: 1
+                    a
+                        top: 20px
+                        &:hover
+                            &.icon-stackoverflow
+                                color: $stackOverflowOrange
+                            &.icon-linkedin2
+                                color: $linkedInBlue
+                            &.icon-github
+                                color: $githubBlack
+// Header on devices with touch
+body.touch
+    header
+        .about
+            display: block
+            width: 200px
+            .socialLink
+                display: none
+            .socialLogos
+                text-align: right
+                a
+                    margin-left: 18px
+        @include breakpoint(laptop)
+            .logo
+                max-width: 200px
+        @include breakpoint(mobileonly)
+            .logo
+                width: 160px
+            .about
+                width: 100%
