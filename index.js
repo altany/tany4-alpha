@@ -4,7 +4,7 @@ var ldJson = {
 	"@context" : "http://schema.org",
 	"@type" : "Organization",
 	"name" : "Tania Papazafeiropoulou",
-	"description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
+	"alternateName": "Web Developer Personal Website",
 	"description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
 	"url" : "tany4.com",
 	"brand" : "Tany4",
