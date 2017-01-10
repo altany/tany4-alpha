@@ -1,13 +1,24 @@
 var express = require('express');
 var app = express();
 
-var request = require('request');
-var cachedRequest = require('cached-request')(request);
-var cacheDirectory = "/public/tmp/cache";
+var requestExt = require('request-extensible');
+var RequestHttpCache = require('request-http-cache');
 var async = require('async');
 var marked = require('marked');
 
-cachedRequest.setCacheDirectory(cacheDirectory);
+var httpRequestCache = new RequestHttpCache({
+	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
+	ttl: 7200
+});
+
+var request = requestExt({
+  extensions: [
+    httpRequestCache.extension
+  ]
+});
+
+var clientID = process.env.GITHUB_CLIENTID;
+var clientSecret = process.env.GITHUB_SECRET;
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -70,23 +81,22 @@ app.get('/github', function(req, res, next) {
 	var gitHost = 'https://api.github.com';
 	var apiVersion = 'v3';
 	var options = {
-		url: gitHost + '/users/altany/repos',
+		url: gitHost + '/users/altany/repos?client_id=' + clientID + '&client_secret=' + clientSecret,
 		headers: {
 			'User-Agent': 'altany'
-		},
-		ttl: 3000 // 60 secs for the cached response to be considered stale
+		}
 	};
 	
-	cachedRequest(options, function (error, response, body) {
+	request(options, function (error, response, body) {
 		if (error) return next(new Error (error));
 		var repos = JSON.parse(body);
 		async.each( repos, function(repo, callback){
 			console.log('getting', repo.name, 'README file');
-			options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md';
+			options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + clientID + '&client_secret=' + clientSecret;
 			options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
-			cachedRequest(options, function (error, response, body) {
+			request(options, function (error, response, body) {
 				if (error) callback(error);
-				repo.readme = marked(body);
+				repo.readme = marked(body.toString());
 				callback()
 			});
 		}, function(err){
