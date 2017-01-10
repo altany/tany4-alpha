@@ -1,8 +1,35 @@
 var express = require('express');
 var app = express();
 
-var request = require('request');
+var requestExt = require('request-extensible');
+var RequestHttpCache = require('request-http-cache');
 var async = require('async');
+var marked = require('marked');
+
+var httpRequestCache = new RequestHttpCache({
+	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
+	ttl: 7200
+});
+
+var request = requestExt({
+  extensions: [
+    httpRequestCache.extension
+  ]
+});
+
+var clientID = process.env.GITHUB_CLIENTID;
+var clientSecret = process.env.GITHUB_SECRET;
+
+marked.setOptions({
+	renderer: new marked.Renderer(),
+	gfm: true,
+	tables: true,
+	breaks: false,
+	pedantic: false,
+	sanitize: false,
+	smartLists: true,
+	smartypants: false
+});
 
 var ldJson = {
 	"@context" : "http://schema.org",
@@ -54,7 +81,7 @@ app.get('/github', function(req, res, next) {
 	var gitHost = 'https://api.github.com';
 	var apiVersion = 'v3';
 	var options = {
-		url: gitHost + '/users/altany/repos',
+		url: gitHost + '/users/altany/repos?client_id=' + clientID + '&client_secret=' + clientSecret,
 		headers: {
 			'User-Agent': 'altany'
 		}
@@ -65,16 +92,16 @@ app.get('/github', function(req, res, next) {
 		var repos = JSON.parse(body);
 		async.each( repos, function(repo, callback){
 			console.log('getting', repo.name, 'README file');
-			options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md';
+			options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + clientID + '&client_secret=' + clientSecret;
 			options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
 			request(options, function (error, response, body) {
 				if (error) callback(error);
-				repo.readme = body;
+				repo.readme = marked(body.toString());
 				callback()
 			});
 		}, function(err){
 			if (err) return next(new Error('Failed while reading one of the repos'))
-			return res.send(repos);
+			return res.render('github', {page: 'github', repos: repos});
 		});
 	});
 

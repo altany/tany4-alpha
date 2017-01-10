@@ -1,0 +1,9 @@
+extends layout
+block content
+	
+	h1 Github repos for altany
+	
+	if repos.length
+		each repo in repos
+			h3= repo.name
+			p!= repo.readme
