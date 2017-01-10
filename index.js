@@ -86,7 +86,7 @@ app.get('/github', function(req, res, next) {
 			});
 		}, function(err){
 			if (err) return next(new Error('Failed while reading one of the repos'))
-			return res.render('github', {repos: repos});
+			return res.render('github', {page: 'github', repos: repos});
 		});
 	});
 
