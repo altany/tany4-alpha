@@ -3,6 +3,18 @@ var app = express();
 
 var request = require('request');
 var async = require('async');
+var marked = require('marked');
+
+marked.setOptions({
+	renderer: new marked.Renderer(),
+	gfm: true,
+	tables: true,
+	breaks: false,
+	pedantic: false,
+	sanitize: false,
+	smartLists: true,
+	smartypants: false
+});
 
 var ldJson = {
 	"@context" : "http://schema.org",
@@ -69,12 +81,12 @@ app.get('/github', function(req, res, next) {
 			options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
 			request(options, function (error, response, body) {
 				if (error) callback(error);
-				repo.readme = body;
+				repo.readme = marked(body);
 				callback()
 			});
 		}, function(err){
 			if (err) return next(new Error('Failed while reading one of the repos'))
-			return res.send(repos);
+			return res.render('github', {repos: repos});
 		});
 	});
 
