@@ -2,8 +2,12 @@ var express = require('express');
 var app = express();
 
 var request = require('request');
+var cachedRequest = require('cached-request')(request);
+var cacheDirectory = "/public/tmp/cache";
 var async = require('async');
 var marked = require('marked');
+
+cachedRequest.setCacheDirectory(cacheDirectory);
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -69,17 +73,18 @@ app.get('/github', function(req, res, next) {
 		url: gitHost + '/users/altany/repos',
 		headers: {
 			'User-Agent': 'altany'
-		}
+		},
+		ttl: 3000 // 60 secs for the cached response to be considered stale
 	};
 	
-	request(options, function (error, response, body) {
+	cachedRequest(options, function (error, response, body) {
 		if (error) return next(new Error (error));
 		var repos = JSON.parse(body);
 		async.each( repos, function(repo, callback){
 			console.log('getting', repo.name, 'README file');
 			options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md';
 			options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
-			request(options, function (error, response, body) {
+			cachedRequest(options, function (error, response, body) {
 				if (error) callback(error);
 				repo.readme = marked(body);
 				callback()
