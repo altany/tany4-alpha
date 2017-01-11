@@ -80,6 +80,19 @@
 	.intro img
 		height: 40px
 	.repoContainer
-		border: 1px solid $githubBlue
-		padding: 20px
-		+border-radius
+		margin-bottom: 20px
+		.repoName
+			width: 100%
+			background-color: $githubLightBlue
+			padding: 20px
+			border: 1px solid $githubBlue
+			+border-radius($side: '-top-right')
+			+border-radius($side: '-top-left')
+			margin: 0
+		.readme
+			display: inline-block
+			width: 100%
+			border: 1px solid #ddd
+			+border-radius($side: '-bottom-right')
+			+border-radius($side: '-bottom-left')
+			padding: 10px 20px

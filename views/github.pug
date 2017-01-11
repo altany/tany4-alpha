@@ -15,6 +15,6 @@ block content
 	if repos && repos.length
 		each repo in repos
 			.repoContainer
-				h3
+				h3.repoName
 					a(href=repo.html_url)= repo.name
-				p!= repo.readme
+				.readme!= repo.readme
