@@ -90,19 +90,36 @@ app.get('/github', function(req, res, next) {
 	request(options, function (error, response, body) {
 		if (error) return next(new Error (error));
 		var repos = JSON.parse(body);
-		async.each( repos, function(repo, callback){
-			console.log('getting', repo.name, 'README file');
-			options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + clientID + '&client_secret=' + clientSecret;
-			options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
-			request(options, function (error, response, body) {
-				if (error) callback(error);
-				repo.readme = marked(body.toString());
-				callback()
+		if (repos.length) {
+			console.log('Found', repos.length, 'repos');
+			async.each( repos, function(repo, callback){
+				options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + clientID + '&client_secret=' + clientSecret;
+				options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
+				request(options, function (error, response, body) {
+					if (error) callback(error);
+					if (response.statusCode===404) {
+						repo.readme = 'No description available...'
+					}
+					else if (response.statusCode!==200) {
+						console.warn('Error getting README content for', repo.name);
+						repo.readme = 'There was an error while getting this repo\'s README file';
+					}
+					else {
+						repo.readme = marked(body.toString());
+					}
+					callback()
+				});
+			}, function(err){
+				if (err) return next(new Error('Failed while reading one of the repos:' + err))
+				return res.render('github', {page: 'github', repos: repos});
 			});
-		}, function(err){
-			if (err) return next(new Error('Failed while reading one of the repos'))
-			return res.render('github', {page: 'github', repos: repos});
-		});
+		}
+		else {
+			var message = 'No repos found right now. Please try again later';
+			console.warn(message);
+			return res.render('github', {page: 'github', warning: message})
+		}
+		
 	});
 
 });
