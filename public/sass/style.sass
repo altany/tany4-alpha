@@ -77,12 +77,15 @@
 #github
 	img
 		max-width: 100%
+	
 	.intro img
 		height: 40px
 	.repoContainer
 		margin-bottom: 20px
+		.repoName, .readme
+			width: calc(100% - 40px)
 		.repoName
-			width: 100%
+			//width: 100%
 			background-color: $githubLightBlue
 			padding: 20px
 			border: 1px solid $githubBlue
@@ -94,10 +97,13 @@
 		.readme
 			font-size: 13px
 			display: inline-block
-			width: 100%
+			//width: 100%
 			border: 1px solid #ddd
 			+border-radius($side: '-bottom-right')
 			+border-radius($side: '-bottom-left')
 			padding: 10px 20px
 			h1
 				font-size: 20px
+	@include breakpoint(mobileonly)
+		iframe
+			max-width: 100%
