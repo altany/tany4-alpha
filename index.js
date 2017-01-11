@@ -81,7 +81,7 @@ app.get('/github', function(req, res, next) {
 	var gitHost = 'https://api.github.com';
 	var apiVersion = 'v3';
 	var options = {
-		url: gitHost + '/users/altany/repos?client_id=' + clientID + '&client_secret=' + clientSecret,
+		url: gitHost + '/users/altany/repos?sort=updated&client_id=' + clientID + '&client_secret=' + clientSecret,
 		headers: {
 			'User-Agent': 'altany'
 		}
@@ -91,7 +91,6 @@ app.get('/github', function(req, res, next) {
 		if (error) return next(new Error (error));
 		var repos = JSON.parse(body);
 		if (repos.length) {
-			console.log('Found', repos.length, 'repos');
 			async.each( repos, function(repo, callback){
 				options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + clientID + '&client_secret=' + clientSecret;
 				options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
