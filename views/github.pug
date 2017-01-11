@@ -17,4 +17,14 @@ block content
 			.repoContainer
 				h3.repoName
 					a(href=repo.html_url)= repo.name
+					.lastCommit
+						if repo.lastCommit 
+							if repo.lastCommit.link
+								| Latest commit: 
+								a(href=repo.lastCommit.link)= repo.lastCommit.message 
+							else
+								| repo.lastCommit.message 
+							if repo.lastCommit.date
+								|  on #{repo.lastCommit.date}
+						
 				.readme!= repo.readme

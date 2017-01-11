@@ -81,7 +81,7 @@ app.get('/github', function(req, res, next) {
 	var gitHost = 'https://api.github.com';
 	var apiVersion = 'v3';
 	var options = {
-		url: gitHost + '/users/altany/repos?sort=updated&client_id=' + clientID + '&client_secret=' + clientSecret,
+		url: gitHost + '/users/altany/repos?sort=created&client_id=' + clientID + '&client_secret=' + clientSecret,
 		headers: {
 			'User-Agent': 'altany'
 		}
@@ -106,7 +106,26 @@ app.get('/github', function(req, res, next) {
 					else {
 						repo.readme = marked(body.toString());
 					}
-					callback()
+					options.url = gitHost + '/repos/altany/' + repo.name + '/commits?client_id=' + clientID + '&client_secret=' + clientSecret;
+					request(options, function (e, r, b) {
+						if(e) callback(e);
+						var commit = JSON.parse(b)[0];
+						repo.lastCommit = {};
+						if (r.statusCode!==200) {
+							console.warn('Error getting the commits list for', repo.name);
+							repo.lastCommit = {
+								message: 'Error getting the commit history'
+							}
+						}
+						else {
+							repo.lastCommit = {
+								link: commit.html_url,
+								date: commit.commit.author.date,
+								message: commit.commit.message
+							}
+						}
+						callback()
+					});
 				});
 			}, function(err){
 				if (err) return next(new Error('Failed while reading one of the repos:' + err))
