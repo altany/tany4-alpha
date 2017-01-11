@@ -9,6 +9,8 @@ $githubBlack: #000000
 $githubPurple: #6e5494
 $cvGray: #5d5d5d
 $googleRed: #dd4b39
+$githubLightBlue: #f2f9fc
+$githubBlue: #c9e6f2
 
 /*********************
     * Breakpoints
@@ -48,4 +50,9 @@ $googleRed: #dd4b39
 	-webkit-transition: $transition
 	transition:         $transition
 
-  
+@mixin border-radius($radius:5px)
+	-webkit-border-radius: $radius
+	-moz-border-radius: $radius
+	-ms-border-radius: $radius
+	border-radius: $radius
+
