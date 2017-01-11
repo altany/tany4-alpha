@@ -5,6 +5,7 @@ var requestExt = require('request-extensible');
 var RequestHttpCache = require('request-http-cache');
 var async = require('async');
 var marked = require('marked');
+var timeAgo = require('node-time-ago');
 
 var httpRequestCache = new RequestHttpCache({
 	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
@@ -120,7 +121,7 @@ app.get('/github', function(req, res, next) {
 						else {
 							repo.lastCommit = {
 								link: commit.html_url,
-								date: commit.commit.author.date,
+								date: timeAgo(commit.commit.author.date),
 								message: commit.commit.message
 							}
 						}
