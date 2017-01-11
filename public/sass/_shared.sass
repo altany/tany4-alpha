@@ -50,9 +50,9 @@ $githubBlue: #c9e6f2
 	-webkit-transition: $transition
 	transition:         $transition
 
-@mixin border-radius($radius:5px)
-	-webkit-border-radius: $radius
-	-moz-border-radius: $radius
-	-ms-border-radius: $radius
-	border-radius: $radius
+@mixin border-radius($side: '', $radius:5px)
+	-webkit-border#{$side}-radius: $radius
+	-moz-border#{$side}-radius: $radius
+	-ms-border#{$side}-radius: $radius
+	border#{$side}-radius: $radius
 
