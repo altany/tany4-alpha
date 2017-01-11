@@ -97,6 +97,9 @@ body.no-touch
 								color: $linkedInBlue
 							&.icon-github
 								color: $githubBlack
+		@include breakpoint(mobileonly)
+			.logo
+				width: 230px
 // Header on devices with touch
 body.touch
 	header
