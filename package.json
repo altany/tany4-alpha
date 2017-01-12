@@ -20,6 +20,7 @@
     "node-time-ago": "^1.0.0",
     "pug": "^2.0.0-beta6",
     "request-extensible": "^0.1.1",
-    "request-http-cache": "^1.0.1"
+    "request-http-cache": "^1.0.1",
+    "universal-analytics": "^0.4.8"
   }
 }
