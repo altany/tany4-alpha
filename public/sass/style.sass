@@ -5,6 +5,15 @@
 	background: #fff4cc
     border-color: #ffe070
 	padding: 10px
+
+.rainbow
+  background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #ef639a), color-stop(0.2, #ef639a), color-stop(0.4, #a479b4), color-stop(0.6, #a479b4), color-stop(0.7, #8b008b),color-stop(0.8, #8b008b), color-stop(1, #ef639a) )
+  background-image: gradient( linear, left top, right top, color-stop(0, #ef639a), color-stop(0.2, #ef639a), color-stop(0.4, #a479b4), color-stop(0.6, #a479b4), color-stop(0.7, #8b008b),color-stop(0.8, #8b008b), color-stop(1, #ef639a) )
+  color: transparent
+  -webkit-background-clip: text
+  background-clip: text
+
+
 #home
 	.profileImg
 		float: left
@@ -47,6 +56,8 @@
 	.link
 		margin-bottom: 20px
 		position: relative
+		.rainbow
+			font-weight: bold
 	a.icon
 		//display: block
 		font-size: 35px
