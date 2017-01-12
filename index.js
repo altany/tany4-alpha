@@ -6,6 +6,8 @@ var RequestHttpCache = require('request-http-cache');
 var async = require('async');
 var marked = require('marked');
 var timeAgo = require('node-time-ago');
+var ua = require('universal-analytics');
+
 
 var httpRequestCache = new RequestHttpCache({
 	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
@@ -20,6 +22,9 @@ var request = requestExt({
 
 var clientID = process.env.GITHUB_CLIENTID;
 var clientSecret = process.env.GITHUB_SECRET;
+var gaID = process.env.GA_ACCOUNT_ID;
+
+var visitor = ua(gaID); //.debug(); To log the tracking info for testing
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -57,11 +62,19 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-  res.render('index', {page:'home', ldJson: ldJson});
+	
+	// Track pageview
+	visitor.pageview({dp: "/", dt: "Home"}).send();
+	
+	res.render('index', {page:'home', ldJson: ldJson});
 });
 
 app.get('/social', function (req, res) {
-  res.render('social', {page:'social', ldJson: ldJson});
+	
+	// Track pageview
+	visitor.pageview({dp: "/social", dt: "Social"}).send();
+	
+ 	res.render('social', {page:'social', ldJson: ldJson});
 });
 var sass = require('node-sass');
 
@@ -79,6 +92,10 @@ app.get('/public/style.css', function(req, res, next) {
 app.use('/TaniaPapazafeiropoulou-CV', express.static(__dirname + '/public/files/TaniaPapazafeiropoulouCV.pdf'));
 
 app.get('/github', function(req, res, next) {
+	
+	// Track pageview
+	visitor.pageview({dp: "/github", dt: "Github"}).send();
+	
 	var gitHost = 'https://api.github.com';
 	var apiVersion = 'v3';
 	var options = {
