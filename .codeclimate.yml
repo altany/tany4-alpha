@@ -14,7 +14,8 @@ engines:
         - javascript
 ratings:
   paths:
-  - "public/js/**"
+  - "**.js"
+  - "**.json"
   - "**.pug"
   - "**.sass"
 exclude_paths:
