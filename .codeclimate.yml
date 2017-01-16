@@ -9,9 +9,9 @@ engines:
     enabled: true
   duplication:
     enabled: true
-config:
-  languages:
-  - javascript
+    config:
+    languages:
+      - javascript
 ratings:
   paths:
   - "public/js/**"
