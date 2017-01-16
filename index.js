@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 
+const path = require('path');
 var requestExt = require('request-extensible');
 var RequestHttpCache = require('request-http-cache');
 var async = require('async');
@@ -59,7 +60,7 @@ app.set('port', (process.env.PORT || 5000));
 app.set('views', './views');
 app.set('view engine', 'pug');
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
 	
@@ -89,7 +90,7 @@ app.get('/public/style.css', function(req, res, next) {
 });
 
 /* Host my CV as pdf */
-app.use('/TaniaPapazafeiropoulou-CV', express.static(__dirname + '/public/files/TaniaPapazafeiropoulouCV.pdf'));
+app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, '/public/files/TaniaPapazafeiropoulouCV.pdf')));
 
 app.get('/github', function(req, res, next) {
 	
@@ -113,7 +114,7 @@ app.get('/github', function(req, res, next) {
 				options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + clientID + '&client_secret=' + clientSecret;
 				options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
 				request(options, function (error, response, body) {
-					if (error) callback(error);
+					if (error) return callback(error);
 					if (response.statusCode===404) {
 						repo.readme = 'No description available...'
 					}
@@ -126,7 +127,7 @@ app.get('/github', function(req, res, next) {
 					}
 					options.url = gitHost + '/repos/altany/' + repo.name + '/commits?client_id=' + clientID + '&client_secret=' + clientSecret;
 					request(options, function (e, r, b) {
-						if(e) callback(e);
+						if(e) return callback(e);
 						var commit = JSON.parse(b)[0];
 						repo.lastCommit = {};
 						if (r.statusCode!==200) {
