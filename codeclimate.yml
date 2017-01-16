@@ -5,7 +5,7 @@ engines:
    	enabled: true
   eslint:
     enabled: true
-  csslint:
+  scss-lint:
     enabled: true
   duplication:
   	enabled: true
@@ -15,8 +15,8 @@ engines:
 ratings:
   paths:
   - "public/js/**"
-  - "public/sass/**"
   - "**.pug"
+  - "**.sass"
 exclude_paths:
 - node_modules/**
 - test/**
