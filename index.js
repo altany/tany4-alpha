@@ -9,6 +9,7 @@ var marked = require('marked');
 var timeAgo = require('node-time-ago');
 var ua = require('universal-analytics');
 var sass = require('node-sass');
+var gh = require('./config/github');
 
 var httpRequestCache = new RequestHttpCache({
 	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
@@ -21,8 +22,6 @@ var request = requestExt({
   ]
 });
 
-var clientID = process.env.GITHUB_CLIENTID;
-var clientSecret = process.env.GITHUB_SECRET;
 var gaID = process.env.GA_ACCOUNT_ID;
 
 var visitor = ua(gaID); //.debug(); //To log the tracking info for testing
@@ -86,23 +85,15 @@ app.get('/:page?', function (req, res) {
 	
 	// If page is Github, render the Github API results
 	if (req.params.page && req.params.page === 'github') {
-		var gitHost = 'https://api.github.com';
-		var apiVersion = 'v3';
-		var options = {
-			url: gitHost + '/users/altany/repos?sort=created&client_id=' + clientID + '&client_secret=' + clientSecret,
-			headers: {
-				'User-Agent': 'altany'
-			}
-		};
 
-		request(options, function (error, response, body) {
+		request(gh.options, function (error, response, body) {
 			if (error) return next(new Error (error));
 			var repos = JSON.parse(body);
 			if (repos.length) {
 				async.each( repos, function(repo, callback){
-					options.url = gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + clientID + '&client_secret=' + clientSecret;
-					options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
-					request(options, function (error, response, body) {
+					gh.options.url = gh.gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + gh.clientID + '&client_secret=' + gh.clientSecret;
+					gh.options.headers['Accept'] = 'application/vnd.github.' + gh.apiVersion + '.raw';
+					request(gh.options, function (error, response, body) {
 						if (error) return callback(error);
 						if (response.statusCode===404) {
 							repo.readme = 'No description available...'
@@ -114,8 +105,8 @@ app.get('/:page?', function (req, res) {
 						else {
 							repo.readme = marked(body.toString());
 						}
-						options.url = gitHost + '/repos/altany/' + repo.name + '/commits?client_id=' + clientID + '&client_secret=' + clientSecret;
-						request(options, function (e, r, b) {
+						gh.options.url = gh.gitHost + '/repos/altany/' + repo.name + '/commits?client_id=' + gh.clientID + '&client_secret=' + gh.clientSecret;
+						request(gh.options, function (e, r, b) {
 							if(e) return callback(e);
 							var commit = JSON.parse(b)[0];
 							repo.lastCommit = {};
