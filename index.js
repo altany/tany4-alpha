@@ -1,30 +1,44 @@
-var express = require('express');
-var app = express();
+let express = require('express');
+let app = express();
 
 const path = require('path');
-var requestExt = require('request-extensible');
-var RequestHttpCache = require('request-http-cache');
-var async = require('async');
-var marked = require('marked');
-var timeAgo = require('node-time-ago');
-var ua = require('universal-analytics');
-var sass = require('node-sass');
-var gh = require('./config/github');
 
-var httpRequestCache = new RequestHttpCache({
+let async = require('async');
+let marked = require('marked');
+let timeAgo = require('node-time-ago');
+let ua = require('universal-analytics');
+let sass = require('node-sass');
+let githubApiRoutes = require('./service/github');
+let apiVersion =  'v3';
+let gaID = process.env.GA_ACCOUNT_ID;
+
+let visitor = ua(gaID); //.debug(); //To log the tracking info for testing
+
+
+let requestExt = require('request-extensible');
+let RequestHttpCache = require('request-http-cache');
+
+let httpRequestCache = new RequestHttpCache({
 	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
 	ttl: 7200
 });
 
-var request = requestExt({
+let request = requestExt({
   extensions: [
     httpRequestCache.extension
   ]
 });
 
-var gaID = process.env.GA_ACCOUNT_ID;
+let clientID = process.env.GITHUB_CLIENTID ;
+let	clientSecret = process.env.GITHUB_SECRET;
+let	host = 'https://api.github.com';
+let auth = 'client_id=' + clientID + '&client_secret=' + clientSecret
+let options = {
+	headers: {
+		'User-Agent': 'altany'
+	}
+};
 
-var visitor = ua(gaID); //.debug(); //To log the tracking info for testing
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -37,7 +51,7 @@ marked.setOptions({
 	smartypants: false
 });
 
-var ldJson = {
+let ldJson = {
 	"@context" : "http://schema.org",
 	"@type" : "Organization",
 	"name" : "Tania Papazafeiropoulou",
@@ -60,6 +74,8 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api/github/', githubApiRoutes);
 
 /* Host my CV as pdf */
 app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, '/public/files/TaniaPapazafeiropoulouCV.pdf')));
@@ -85,16 +101,16 @@ app.get('/:page?', function (req, res, next) {
 	
 	// If page is Github, render the Github API results
 	if (req.params.page && req.params.page === 'github') {
-		gh.options.url = gh.host + '/users/altany/repos?sort=created&' + gh.auth;
-		request(gh.options, function (error, response, body) {
+		options.url = host + '/users/altany/repos?sort=created&' + auth;
+		request(options, function (error, response, body) {
 			if (error) return next(new Error (error));
 			var repos = JSON.parse(body);
 			if (repos.length) {
 				async.each( repos, function(repo, callback){
-					var reposHost = gh.host + '/repos/';
-					gh.options.url = reposHost + repo.full_name + '/contents/README.md?' + gh.auth;
-					gh.options.headers['Accept'] = 'application/vnd.github.' + gh.apiVersion + '.raw';
-					request(gh.options, function (error, response, body) {
+					var reposHost = host + '/repos/';
+					options.url = reposHost + repo.full_name + '/contents/README.md?' + auth;
+					options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
+					request(options, function (error, response, body) {
 						if (error) return callback(error);
 						if (response.statusCode===404) {
 							repo.readme = 'No description available...'
@@ -106,8 +122,8 @@ app.get('/:page?', function (req, res, next) {
 						else {
 							repo.readme = marked(body.toString());
 						}
-						gh.options.url = reposHost + 'altany/' + repo.name + '/commits?' + gh.auth;
-						request(gh.options, function (e, r, b) {
+						options.url = reposHost + 'altany/' + repo.name + '/commits?' + auth;
+						request(options, function (e, r, b) {
 							if(e) return callback(e);
 							var commit = JSON.parse(b)[0];
 							repo.lastCommit = {};
@@ -149,3 +165,5 @@ app.get('/:page?', function (req, res, next) {
 app.listen(app.get('port'), function () {
   console.log('App listening on port ' + app.get('port'));
 });
+
+module.exports = app;
