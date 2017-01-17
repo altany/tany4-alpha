@@ -25,7 +25,7 @@ var clientID = process.env.GITHUB_CLIENTID;
 var clientSecret = process.env.GITHUB_SECRET;
 var gaID = process.env.GA_ACCOUNT_ID;
 
-var visitor = ua(gaID).debug(); //To log the tracking info for testing
+var visitor = ua(gaID); //.debug(); //To log the tracking info for testing
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
