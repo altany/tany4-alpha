@@ -75,7 +75,7 @@ app.get('/public/style.css', function(req, res, next) {
 	});
 });
 
-app.get('/:page?', function (req, res) {
+app.get('/:page?', function (req, res, next) {
 
 	var page = req.params.page?req.params.page:'home';
 	
