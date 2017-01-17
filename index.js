@@ -77,7 +77,7 @@ app.get('/public/style.css', function(req, res, next) {
 });
 
 app.get('/:page?', function (req, res) {
-	console.log(req.params.page);
+
 	var page = req.params.page?req.params.page:'home';
 	
 	// Track pageview
