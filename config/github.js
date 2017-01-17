@@ -4,8 +4,9 @@ var githubApiConfig = {
 	gitHost: 'https://api.github.com'
 };
 
+githubApiConfig.authParam = 'client_id=' + githubApiConfig.clientID + '&client_secret=' + githubApiConfig.clientSecret;
 githubApiConfig.options = {
-	url: githubApiConfig.gitHost + '/users/altany/repos?sort=created&client_id=' + githubApiConfig.clientID + '&client_secret=' + githubApiConfig.clientSecret,
+	url: githubApiConfig.gitHost + '/users/altany/repos?sort=created&s' + githubApiConfig.authParam,
 	headers: {
 		'User-Agent': 'altany'
 	}

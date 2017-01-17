@@ -91,7 +91,7 @@ app.get('/:page?', function (req, res) {
 			var repos = JSON.parse(body);
 			if (repos.length) {
 				async.each( repos, function(repo, callback){
-					gh.options.url = gh.gitHost + '/repos/' + repo.full_name + '/contents/README.md?client_id=' + gh.clientID + '&client_secret=' + gh.clientSecret;
+					gh.options.url = gh.gitHost + '/repos/' + repo.full_name + '/contents/README.md?' + gh.authParam;
 					gh.options.headers['Accept'] = 'application/vnd.github.' + gh.apiVersion + '.raw';
 					request(gh.options, function (error, response, body) {
 						if (error) return callback(error);
@@ -105,7 +105,7 @@ app.get('/:page?', function (req, res) {
 						else {
 							repo.readme = marked(body.toString());
 						}
-						gh.options.url = gh.gitHost + '/repos/altany/' + repo.name + '/commits?client_id=' + gh.clientID + '&client_secret=' + gh.clientSecret;
+						gh.options.url = gh.gitHost + '/repos/altany/' + repo.name + '/commits?' + gh.authParam;
 						request(gh.options, function (e, r, b) {
 							if(e) return callback(e);
 							var commit = JSON.parse(b)[0];
