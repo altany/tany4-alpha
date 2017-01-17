@@ -85,13 +85,14 @@ app.get('/:page?', function (req, res, next) {
 	
 	// If page is Github, render the Github API results
 	if (req.params.page && req.params.page === 'github') {
-
+		gh.options.url = gh.host + '/users/altany/repos?sort=created&' + gh.auth;
 		request(gh.options, function (error, response, body) {
 			if (error) return next(new Error (error));
 			var repos = JSON.parse(body);
 			if (repos.length) {
 				async.each( repos, function(repo, callback){
-					gh.options.url = gh.gitHost + '/repos/' + repo.full_name + '/contents/README.md?' + gh.authParam;
+					var reposHost = gh.host + '/repos/';
+					gh.options.url = reposHost + repo.full_name + '/contents/README.md?' + gh.auth;
 					gh.options.headers['Accept'] = 'application/vnd.github.' + gh.apiVersion + '.raw';
 					request(gh.options, function (error, response, body) {
 						if (error) return callback(error);
@@ -105,7 +106,7 @@ app.get('/:page?', function (req, res, next) {
 						else {
 							repo.readme = marked(body.toString());
 						}
-						gh.options.url = gh.gitHost + '/repos/altany/' + repo.name + '/commits?' + gh.authParam;
+						gh.options.url = reposHost + 'altany/' + repo.name + '/commits?' + gh.auth;
 						request(gh.options, function (e, r, b) {
 							if(e) return callback(e);
 							var commit = JSON.parse(b)[0];
