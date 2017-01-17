@@ -6,7 +6,7 @@ var githubApiConfig = {
 
 githubApiConfig.authParam = 'client_id=' + githubApiConfig.clientID + '&client_secret=' + githubApiConfig.clientSecret;
 githubApiConfig.options = {
-	url: githubApiConfig.gitHost + '/users/altany/repos?sort=created&s' + githubApiConfig.authParam,
+	url: githubApiConfig.gitHost + '/users/altany/repos?sort=created&' + githubApiConfig.authParam,
 	headers: {
 		'User-Agent': 'altany'
 	}
