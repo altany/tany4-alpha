@@ -14,7 +14,7 @@ describe('Github API', function() {
       chai.request(server)
         .get('/repos')
         .end((err, res) => {
-          if (err) done(err);
+        if (err) done(err);
           res.should.have.status(200);
           res.body.should.be.a('array');
           res.body.length.should.not.be.eql(0);
@@ -35,6 +35,6 @@ describe('Github API', function() {
           done();
         });
     });
-  });	
+  });
 
 });
