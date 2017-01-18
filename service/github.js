@@ -62,7 +62,7 @@ router.get('/readme/:repo', function(req, res) {
 			res.end('No description available...');
 		}
 		else if (response.statusCode!==200) {
-			console.warn('Error getting README content for', repo.name);
+			console.warn('Error getting README content for ', req.params.repo);
 			res.end('There was an error while getting this repo\'s README file');
 		}
 		else {
