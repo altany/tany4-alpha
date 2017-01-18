@@ -5,7 +5,7 @@ process.env.NODE_ENV = 'test';
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
-var server = require('../service/github.js');
+var server = require('../ws/github.js');
 chai.use(chaiHttp);
 
 describe('Github API', function() {

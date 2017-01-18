@@ -8,7 +8,7 @@ const path = require('path');
 let async = require('async');
 let ua = require('universal-analytics');
 let sass = require('node-sass');
-let githubApiRoutes = require('./service/github');
+let githubApiRoutes = require('./ws/github');
 let gaID = process.env.GA_ACCOUNT_ID;
 
 let visitor = ua(gaID); //.debug(); //To log the tracking info for testing
