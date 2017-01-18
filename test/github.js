@@ -36,5 +36,19 @@ describe('Github API', function() {
         });
     });
   });
+  
+  describe('#GET /last-commit/:repo', function() {
+    it('should get last commit info for the given repo\s master branch', function(done) {
+      chai.request(server)
+        .get('/last-commit/tany4')
+        .end((err, res) => {
+          if (err) done(err);
+          res.should.have.status(200);
+          res.should.be.object;
+          res.body.should.have.property('message');
+          done();
+        });
+    });
+  });
 
 });
