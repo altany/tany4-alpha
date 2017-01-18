@@ -4,7 +4,9 @@
   "description": "This is my personal website",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "codeclimate": "codeclimate-test-reporter < lcov.info",
+    "test": "mocha",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,7 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "codeclimate-test-reporter": "^0.4.0",
+    "istanbul": "^0.4.5",
     "mocha": "^3.2.0"
   }
 }
