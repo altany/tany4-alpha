@@ -61,30 +61,43 @@ app.get('/:page?', function (req, res, next) {
   // Track pageview
   visitor.pageview({dp: '/' + (req.params.page?req.params.page:''), dt: page.charAt(0).toUpperCase() + page.slice(1)}).send();
   
-  
   // If page is Github, render the Github API results
   if (req.params.page && req.params.page === 'github') {
     request.get('http://' + req.headers.host + '/api/github/repos', function (error, response, body) {
-      if (error) return next(new Error (error));
+      if (error || response.statusCode!==200) {
+        let message = 'Error loading the repos...';
+        return res.render('github', {page: 'github', warning: message})
+      }
+    
       var repos = JSON.parse(body);
       if (repos.length) {
         async.each( repos, function(repo, callback){
           request.get('http://' + req.headers.host + '/api/github/readme/' + repo.name, function (error, response, body) {
-            if (error) return callback(error);
+            if (error || response.statusCode!==200) {
+              repo.readme = 'Error reading the description...'
+              console.error('Error reading the description of ' + repo.name);
+            }
             else repo.readme = body;
             request.get('http://' + req.headers.host + '/api/github/last-commit/' + repo.name, function (e, r, b) {
-              if(e) return callback(e);
-              repo.lastCommit = JSON.parse(b);
+              if(e || r.statusCode!==200) {
+                repo.lastCommit = {message: 'Error getting the last commit info...'};
+                console.error('Error get the last commit for ' + repo.name);
+              }
+              else {
+                repo.lastCommit = JSON.parse(b);
+              }
               callback();
             });
           });
         }, function(err){
-          if (err) return next(new Error('Failed while reading one of the repos:' + err))
+          if (err) {
+            console.error('Async failed while reading one of the repos details');
+          }
           return res.render('github', {page: 'github', repos: repos});
         });
       }
       else {
-        var message = 'No repos found right now. Please try again later';
+        let message = 'No repos found right now. Please try again later';
         console.warn(message);
         return res.render('github', {page: 'github', warning: message})
       }
