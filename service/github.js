@@ -54,10 +54,9 @@ router.get('/repos', function(req, res) {
 router.get('/readme/:repo', function(req, res) {
 	options.url = host + 'repos/altany/' + req.params.repo + '/contents/README.md?' + auth;
 	options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
-	console.log(options.url);
 	request(options, function (error, response, body) {
 		if (error) return new Error (error);
-		res.setHeader( 'Content-Type', 'application/javascript' );
+		res.setHeader( 'Content-Type', 'text/html' );
  
 		if (response.statusCode===404) {
 			res.end('No description available...');

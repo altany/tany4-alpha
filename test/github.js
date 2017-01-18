@@ -9,7 +9,7 @@ var server = require('../service/github.js');
 chai.use(chaiHttp);
 
 describe('Github API', function() {
-  describe('#GET repos', function() {
+  describe('#GET /repos', function() {
     it('should return a non-empty list of repos', function(done) {
       chai.request(server)
         .get('/repos')
@@ -22,4 +22,19 @@ describe('Github API', function() {
         });
     });
   });
+		
+	describe('#GET /readme/:repo', function() {
+    it('should get the Readme.md content for the given repo', function(done) {
+      chai.request(server)
+        .get('/readme/tany4')
+        .end((err, res) => {
+          if (err) done(err);
+          res.should.have.status(200);
+          res.should.be.html;
+          res.text.should.not.be.empty;
+          done();
+        });
+    });
+  });	
+
 });
