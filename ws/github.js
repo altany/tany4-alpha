@@ -46,9 +46,12 @@ marked.setOptions({
 router.get('/repos', function(req, res) {
   options.url = host + 'users/altany/repos?sort=created&' + auth;
   request(options, function (error, response, body) {
-    if (error) return next(new Error (error));
+    if (error) {
+      console.error(error);
+      return res.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when getting the repos');
+    }
     res.setHeader( 'Content-Type', 'application/json' );
-      res.end(body);
+    res.end(body);
   });
 });
 
@@ -56,7 +59,10 @@ router.get('/readme/:repo', function(req, res) {
   options.url = host + 'repos/altany/' + req.params.repo + '/contents/README.md?' + auth;
   options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
   request(options, function (error, response, body) {
-    if (error) return new Error (error);
+    if (error) {
+      console.error(error);
+      return res.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when requesting the README.md for ' + req.params.repo);
+    }
     
     res.setHeader( 'Content-Type', 'text/html' );
 
@@ -76,7 +82,10 @@ router.get('/readme/:repo', function(req, res) {
 router.get('/last-commit/:repo', function(req, res) {
   options.url = host + 'repos/altany/' + req.params.repo + '/commits?' + auth;
   request(options, function (error, response, body) {
-    if (error) return new Error (error);
+    if (error) {
+      console.error(error);
+      return res.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when requesting the commits history for ' + req.params.repo);
+    }
     res.setHeader( 'Content-Type', 'application/json' );
     let commit = JSON.parse(body)[0];
     let result = {};

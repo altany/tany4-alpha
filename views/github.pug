@@ -23,7 +23,7 @@ block content
 								| Latest commit: 
 								a(href=repo.lastCommit.link)= repo.lastCommit.message 
 							else
-								| repo.lastCommit.message 
+								| #{repo.lastCommit.message} 
 							if repo.lastCommit.date
 								|  #{repo.lastCommit.date}
 						
