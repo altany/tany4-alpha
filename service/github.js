@@ -30,7 +30,8 @@ router.get('/repos', function(req, res) {
 	options.url = host + '/users/altany/repos?sort=created&' + auth;
 	request(options, function (error, response, body) {
 		if (error) return next(new Error (error));
-		res.json(JSON.parse(body));
+		res.setHeader( 'Content-Type', 'application/json' );
+        res.end(body);
 	});
 });
 

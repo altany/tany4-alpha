@@ -10,9 +10,16 @@ chai.use(chaiHttp);
 
 describe('Github API', function() {
   describe('#GET repos', function() {
-    it('should return a list of repos', function(done) {
-      // https://scotch.io/tutorials/test-a-node-restful-api-with-mocha-and-chai
-      done();
+    it('should return a non-empty list of repos', function(done) {
+      chai.request(server)
+        .get('/repos')
+        .end((err, res) => {
+          if (err) done(err);
+          res.should.have.status(200);
+          res.body.should.be.a('array');
+          res.body.length.should.not.be.eql(0);
+          done();
+        });
     });
   });
 });
