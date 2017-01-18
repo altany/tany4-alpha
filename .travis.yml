@@ -8,6 +8,5 @@ addons:
   code_climate:
     repo_token:
       secure: haLv/W3q6hevdh/fovfAthK/bzp+sj8ukL8i+sFnk1Fsh0spKgOQSgpW9Fw/xPAL0Wp1Goh/+VKbwFhYKw8PrB0V5IJTAVx5UT5EACJgFLCh5iZWUynk7S71TVDFM0HhTgTpsWIp5DVkMJrHeRrcHkkuyYUkSFzW5jp8yfRjs8HnGJodqJyYnoK5qRmRamOcbYTjAQznxPaguc6hC3tUUSB8IVEiqg5S+605kSwl0hQta5gihJF9yvpWmN/ODFJfKLHv4oH5tOWaFRsZd5gZljrle4M0jgGHjDF4bu8xnrcrdv33iujYpk82yOyLuBArJOst7kLcVvN7No5qH53hgkRICXpC4q64+NdWgYu03ix8BtcopHIOSkOZT0oTCZ0F5nSqD5JE43QfTTKNOhePNaf0z93dp1R5VcontUU8oRZo1QrOqTUCNmai53TOewQiYUgEjZX2F7EQIzBdg0TFBM6Tr/bfilKhHfmmExyj1DiPB6NMZQGUNnAsCErgUm6liqpiS+bWgAYauSwGWyzZgBy1bREy7GOFPOyO3ALM5PdRaeleAPCT5KJPmE/9HRj51+s5qo7J3sakWfiIMxBEKeyqC5HpGM/8Fr74godRnHuwtcCbGIXrUC/gow3kYj/CaGenj4GT3AStHA7iw3VKLHE/lHNSVySiE9jfqpsc++o=
-after_success:
-  - npm install -g codeclimate-test-reporter
-  - codeclimate-test-reporter < lcov.info
+script:
+- codeclimate-test-reporter < lcov.info
