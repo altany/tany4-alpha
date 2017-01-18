@@ -43,12 +43,16 @@ marked.setOptions({
   smartypants: false
 });
 
+function formatErrorResponse(response, message, repo) {
+  return response.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when ' + message + (repo?' for ' + repo:''));
+}
+
 router.get('/repos', function(req, res) {
   options.url = host + 'users/altany/repos?sort=created&' + auth;
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return res.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when getting the repos');
+      return formatErrorResponse(res, 'getting the repos');
     }
     res.setHeader( 'Content-Type', 'application/json' );
     res.end(body);
@@ -61,7 +65,7 @@ router.get('/readme/:repo', function(req, res) {
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return res.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when requesting the README.md for ' + req.params.repo);
+      return formatErrorResponse(res, 'requesting the README.md', req.params.repo);
     }
     
     res.setHeader( 'Content-Type', 'text/html' );
@@ -84,7 +88,7 @@ router.get('/last-commit/:repo', function(req, res) {
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return res.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when requesting the commits history for ' + req.params.repo);
+      return formatErrorResponse(res, 'requesting the commits history', req.params.repo);
     }
     res.setHeader( 'Content-Type', 'application/json' );
     let commit = JSON.parse(body)[0];
