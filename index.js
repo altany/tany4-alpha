@@ -1,12 +1,11 @@
 "use strict";
- 
+
 let express = require('express');
 let app = express();
 
 const path = require('path');
 
 let async = require('async');
-let marked = require('marked');
 let timeAgo = require('node-time-ago');
 let ua = require('universal-analytics');
 let sass = require('node-sass');
@@ -25,11 +24,7 @@ let httpRequestCache = new RequestHttpCache({
 	ttl: 7200
 });
 
-let request = requestExt({
-  extensions: [
-    httpRequestCache.extension
-  ]
-});
+let request = require('request');
 
 let clientID = process.env.GITHUB_CLIENTID ;
 let	clientSecret = process.env.GITHUB_SECRET;
@@ -42,16 +37,6 @@ let options = {
 };
 
 
-marked.setOptions({
-	renderer: new marked.Renderer(),
-	gfm: true,
-	tables: true,
-	breaks: false,
-	pedantic: false,
-	sanitize: false,
-	smartLists: true,
-	smartypants: false
-});
 
 let ldJson = {
 	"@context" : "http://schema.org",
@@ -77,7 +62,7 @@ app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/github/', githubApiRoutes);
+app.use('/api/github', githubApiRoutes);
 
 /* Host my CV as pdf */
 app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, '/public/files/TaniaPapazafeiropoulouCV.pdf')));
@@ -104,27 +89,15 @@ app.get('/:page?', function (req, res, next) {
 	// If page is Github, render the Github API results
 	if (req.params.page && req.params.page === 'github') {
 		options.url = host + '/users/altany/repos?sort=created&' + auth;
-		request(options, function (error, response, body) {
+		request.get('http://' + req.headers.host + '/api/github/repos', function (error, response, body) {
 			if (error) return next(new Error (error));
 			var repos = JSON.parse(body);
 			if (repos.length) {
 				async.each( repos, function(repo, callback){
-					var reposHost = host + '/repos/';
-					options.url = reposHost + repo.full_name + '/contents/README.md?' + auth;
-					options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
-					request(options, function (error, response, body) {
+					request.get('http://' + req.headers.host + '/api/github/readme/' + repo.name, function (error, response, body) {
 						if (error) return callback(error);
-						if (response.statusCode===404) {
-							repo.readme = 'No description available...'
-						}
-						else if (response.statusCode!==200) {
-							console.warn('Error getting README content for', repo.name);
-							repo.readme = 'There was an error while getting this repo\'s README file';
-						}
-						else {
-							repo.readme = marked(body.toString());
-						}
-						options.url = reposHost + 'altany/' + repo.name + '/commits?' + auth;
+						else repo.readme = body;
+						options.url = host + '/repos/altany/' + repo.name + '/commits?' + auth;
 						request(options, function (e, r, b) {
 							if(e) return callback(e);
 							var commit = JSON.parse(b)[0];
