@@ -8,6 +8,8 @@ const path = require('path');
 let async = require('async');
 let ua = require('universal-analytics');
 let sass = require('node-sass');
+let favicon = require('serve-favicon');
+
 let githubApiRoutes = require('./ws/github');
 let gaID = process.env.GA_ACCOUNT_ID;
 
@@ -37,6 +39,8 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 
 app.use('/api/github', githubApiRoutes);
 
