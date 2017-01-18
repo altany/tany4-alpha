@@ -6,6 +6,7 @@ let requestExt = require('request-extensible');
 let RequestHttpCache = require('request-http-cache');
 
 let marked = require('marked');
+let timeAgo = require('node-time-ago');
 
 let httpRequestCache = new RequestHttpCache({
 	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
@@ -70,5 +71,28 @@ router.get('/readme/:repo', function(req, res) {
 		}
 	});
 });
+
+router.get('/last-commit/:repo', function(req, res) {
+	options.url = host + 'repos/altany/' + req.params.repo + '/commits?' + auth;
+	request(options, function (error, response, body) {
+		if (error) return new Error (error);
+		res.setHeader( 'Content-Type', 'application/json' );
+ 		let commit = JSON.parse(body)[0];
+		let result = {}; 	
+		if (response.statusCode!==200) {
+			console.warn('Error getting the commits list for', req.params.repo);
+			result.message = 'There was an error while getting this repo\'s README file';
+		}
+		else {
+			result = {
+					link: commit.html_url,
+					date: timeAgo(commit.commit.author.date),
+					message: commit.commit.message
+				}
+		}
+		res.end(JSON.stringify(result));
+	});
+});
+
 
 module.exports = router;
