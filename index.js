@@ -6,37 +6,13 @@ let app = express();
 const path = require('path');
 
 let async = require('async');
-let timeAgo = require('node-time-ago');
 let ua = require('universal-analytics');
 let sass = require('node-sass');
 let githubApiRoutes = require('./service/github');
-let apiVersion =  'v3';
 let gaID = process.env.GA_ACCOUNT_ID;
 
 let visitor = ua(gaID); //.debug(); //To log the tracking info for testing
-
-
-let requestExt = require('request-extensible');
-let RequestHttpCache = require('request-http-cache');
-
-let httpRequestCache = new RequestHttpCache({
-	max: 10*1024*1024, // Maximum cache size (1mb) defaults to 512Kb 
-	ttl: 7200
-});
-
 let request = require('request');
-
-let clientID = process.env.GITHUB_CLIENTID ;
-let	clientSecret = process.env.GITHUB_SECRET;
-let	host = 'https://api.github.com';
-let auth = 'client_id=' + clientID + '&client_secret=' + clientSecret
-let options = {
-	headers: {
-		'User-Agent': 'altany'
-	}
-};
-
-
 
 let ldJson = {
 	"@context" : "http://schema.org",
@@ -88,7 +64,6 @@ app.get('/:page?', function (req, res, next) {
 	
 	// If page is Github, render the Github API results
 	if (req.params.page && req.params.page === 'github') {
-		options.url = host + '/users/altany/repos?sort=created&' + auth;
 		request.get('http://' + req.headers.host + '/api/github/repos', function (error, response, body) {
 			if (error) return next(new Error (error));
 			var repos = JSON.parse(body);
@@ -97,25 +72,10 @@ app.get('/:page?', function (req, res, next) {
 					request.get('http://' + req.headers.host + '/api/github/readme/' + repo.name, function (error, response, body) {
 						if (error) return callback(error);
 						else repo.readme = body;
-						options.url = host + '/repos/altany/' + repo.name + '/commits?' + auth;
-						request(options, function (e, r, b) {
-							if(e) return callback(e);
-							var commit = JSON.parse(b)[0];
-							repo.lastCommit = {};
-							if (r.statusCode!==200) {
-								console.warn('Error getting the commits list for', repo.name);
-								repo.lastCommit = {
-									message: 'Error getting the commit history'
-								}
-							}
-							else {
-								repo.lastCommit = {
-									link: commit.html_url,
-									date: timeAgo(commit.commit.author.date),
-									message: commit.commit.message
-								}
-							}
-							callback()
+						request.get('http://' + req.headers.host + '/api/github/last-commit/' + repo.name, function (e, r, b) {
+							if(e) return callback(e);			
+							repo.lastCommit = JSON.parse(b);
+							callback();
 						});
 					});
 				}, function(err){
