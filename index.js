@@ -15,20 +15,20 @@ let visitor = ua(gaID); //.debug(); //To log the tracking info for testing
 let request = require('request');
 
 let ldJson = {
-	"@context" : "http://schema.org",
-	"@type" : "Organization",
-	"name" : "Tania Papazafeiropoulou",
-	"alternateName": "Web Developer Personal Website",
-	"description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
-	"url" : "tany4.com",
-	"brand" : "Tany4",
-	"email" : "hello@tany4.com",
-	"image" : "/images/profile.gif",
-	"sameAs" : [
-		"https://www.linkedin.com/in/taniapapazaf",
-		"https://www.github.com/altany",
-		"stackoverflow.com/story/tany4"
-	]
+  "@context" : "http://schema.org",
+  "@type" : "Organization",
+  "name" : "Tania Papazafeiropoulou",
+  "alternateName": "Web Developer Personal Website",
+  "description": "Hi, I'm Tania and I love beautiful and practical web sites! I enjoy building captivating UIs that make the experience easy and fun. My latest favourites are Node.js and ReactJS, and I'm a fan of microservices as a means of handling scale and complexity. I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.",
+  "url" : "tany4.com",
+  "brand" : "Tany4",
+  "email" : "hello@tany4.com",
+  "image" : "/images/profile.gif",
+  "sameAs" : [
+    "https://www.linkedin.com/in/taniapapazaf",
+    "https://www.github.com/altany",
+    "stackoverflow.com/story/tany4"
+  ]
 };
 
 app.set('port', (process.env.PORT || 5000));
@@ -46,55 +46,55 @@ app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, '/publ
 /* Compile my sass to css via connect middleware */
 app.get('/public/style.css', function(req, res, next) {
 	sass.render({
-	  file: 'public/sass/style.sass',
-	  sourceMapEmbed: true
-	}, function(err, result) {
-	  if (err) return next(err);
-	  res.set('Content-Type', 'text/css').send(result.css);
-	});
+    file: 'public/sass/style.sass',
+    sourceMapEmbed: true
+  }, function(err, result) {
+    if (err) return next(err);
+    res.set('Content-Type', 'text/css').send(result.css);
+  });
 });
 
 app.get('/:page?', function (req, res, next) {
 
-	var page = req.params.page?req.params.page:'home';
-	
-	// Track pageview
-	visitor.pageview({dp: '/' + (req.params.page?req.params.page:''), dt: page.charAt(0).toUpperCase() + page.slice(1)}).send();
-	
-	
-	// If page is Github, render the Github API results
-	if (req.params.page && req.params.page === 'github') {
-		request.get('http://' + req.headers.host + '/api/github/repos', function (error, response, body) {
-			if (error) return next(new Error (error));
-			var repos = JSON.parse(body);
-			if (repos.length) {
-				async.each( repos, function(repo, callback){
-					request.get('http://' + req.headers.host + '/api/github/readme/' + repo.name, function (error, response, body) {
-						if (error) return callback(error);
-						else repo.readme = body;
-						request.get('http://' + req.headers.host + '/api/github/last-commit/' + repo.name, function (e, r, b) {
-							if(e) return callback(e);			
-							repo.lastCommit = JSON.parse(b);
-							callback();
-						});
-					});
-				}, function(err){
-					if (err) return next(new Error('Failed while reading one of the repos:' + err))
-					return res.render('github', {page: 'github', repos: repos});
-				});
-			}
-			else {
-				var message = 'No repos found right now. Please try again later';
-				console.warn(message);
-				return res.render('github', {page: 'github', warning: message})
-			}
+  var page = req.params.page?req.params.page:'home';
+  
+  // Track pageview
+  visitor.pageview({dp: '/' + (req.params.page?req.params.page:''), dt: page.charAt(0).toUpperCase() + page.slice(1)}).send();
+  
+  
+  // If page is Github, render the Github API results
+  if (req.params.page && req.params.page === 'github') {
+    request.get('http://' + req.headers.host + '/api/github/repos', function (error, response, body) {
+      if (error) return next(new Error (error));
+      var repos = JSON.parse(body);
+      if (repos.length) {
+        async.each( repos, function(repo, callback){
+          request.get('http://' + req.headers.host + '/api/github/readme/' + repo.name, function (error, response, body) {
+            if (error) return callback(error);
+            else repo.readme = body;
+            request.get('http://' + req.headers.host + '/api/github/last-commit/' + repo.name, function (e, r, b) {
+              if(e) return callback(e);
+              repo.lastCommit = JSON.parse(b);
+              callback();
+            });
+          });
+        }, function(err){
+          if (err) return next(new Error('Failed while reading one of the repos:' + err))
+          return res.render('github', {page: 'github', repos: repos});
+        });
+      }
+      else {
+        var message = 'No repos found right now. Please try again later';
+        console.warn(message);
+        return res.render('github', {page: 'github', warning: message})
+      }
 
-		});
-	}
-	else { // Not Github
-		res.render((req.params.page?req.params.page:'index'), {page:page, ldJson: ldJson});
-	}
-	
+    });
+  }
+  else { // Not Github
+    res.render((req.params.page?req.params.page:'index'), {page:page, ldJson: ldJson});
+  }
+  
 });
 
 app.listen(app.get('port'), function () {
