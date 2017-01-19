@@ -43,8 +43,8 @@ marked.setOptions({
   smartypants: false
 });
 
-function formatErrorResponse(response, message, repo) {
-  return response.status(500).header( 'Content-Type', 'text/plain' ).end('Something went wrong when ' + message + (repo?' for ' + repo:''));
+function formatErrorResponse(response, message, repo, code, contentType) {
+  return response.status(code?code:500).header( 'Content-Type', contentType?contentType:'text/plain' ).end(message + (repo?' for repo "' + repo + '"':''));
 }
 
 router.get('/repos', function(req, res) {
@@ -65,20 +65,19 @@ router.get('/readme/:repo', function(req, res) {
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return formatErrorResponse(res, 'requesting the README.md', req.params.repo);
+      return formatErrorResponse(res, 'Error when requesting the README.md', req.params.repo);
+    }
+    if (response.statusCode===404) {
+      console.warn('README content for repo', req.params.repo, 'not found');
+      formatErrorResponse(res, 'README.md not found', req.params.repo, 404);
     }
     
-    res.setHeader( 'Content-Type', 'text/html' );
-
-    if (response.statusCode===404) {
-      res.end('No description available  .');
-    }
     else if (response.statusCode!==200) {
-      console.warn('Error getting README content for ', req.params.repo);
-      res.end('There was an error while getting this repo\'s README file');
+      console.warn('Error getting README content for', req.params.repo);
+      formatErrorResponse(res, response.body, req.params.repo, response.statusCode, 'text/html');
     }
     else {
-      res.end(marked(body).toString());
+      res.header( 'Content-Type', 'text/html' ).end(marked(body).toString());
     }
   });
 });
@@ -93,7 +92,10 @@ router.get('/last-commit/:repo', function(req, res) {
     res.setHeader( 'Content-Type', 'application/json' );
     let commit = JSON.parse(body)[0];
     let result = {};
-    if (response.statusCode!==200) {
+    if (response.statusCode===404) {
+      res.status(500).end('No description available  .');
+    }
+    else if (response.statusCode!==200) {
       console.warn('Error getting the commits list for', req.params.repo);
       result.message = 'There was an error while getting this repo\'s README file';
     }
