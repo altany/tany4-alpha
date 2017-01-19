@@ -74,7 +74,7 @@ router.get('/readme/:repo', function(req, res) {
       return formatErrorResponse({response: res, message: 'README.md not found', repo: req.params.repo, code: 404});
     }
     else if (response.statusCode!==200) {
-      formatErrorResponse({response:res, message: response.body, repo: req.params.repo, code: response.statusCode, contentType: 'text/html'});
+      return formatErrorResponse({response:res, message: response.body, repo: req.params.repo, code: response.statusCode, contentType: 'text/html'});
     }
     else {
       res.setHeader( 'Content-Type', 'text/html' );
