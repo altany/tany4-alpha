@@ -4,4 +4,4 @@
 [![Test Coverage](https://codeclimate.com/github/altany/tany4/badges/coverage.svg)](https://codeclimate.com/github/altany/tany4/coverage)
 
 # My personal website
-[http://tany4.com](tany4.com)
+[http://tany4.com](http://tany4.com)
