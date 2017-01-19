@@ -43,7 +43,7 @@ marked.setOptions({
   smartypants: false
 });
 
-function formatErrorResponse( { response, message = '', repo, code=500, contentType= 'text/plain'} = {}) {
+function formatErrorResponse({ response, message = '', repo, code=500, contentType= 'text/plain'} = {}) {
   response.statusCode = code;
   response.setHeader( 'Content-Type', contentType )
   return response.end(message + (repo?' for repo "' + repo + '"':''));
@@ -53,12 +53,10 @@ router.get('/repos', function(req, res) {
   options.url = host + 'users/altany/repos?sort=created&' + auth;
   request(options, function (error, response, body) {
     if (error) {
-      console.error(error);
-      return formatErrorResponse({response: res, message: 'Error getting the repos'});
+      return formatErrorResponse({response: res, message: error});
     }
     else if (response.statusCode!==200) {
-      console.warn('Failed while getting the repos');
-      return formatErrorResponse({response: res, message: response.body, code: response.statusCode, contentType: 'text/html'});
+      return formatErrorResponse({response: res, message: response.body, code: response.statusCode, contentType: 'application/javascript'});
     }
     res.setHeader( 'Content-Type', 'application/json' );
     res.end(body);
@@ -70,16 +68,12 @@ router.get('/readme/:repo', function(req, res) {
   options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw';
   request(options, function (error, response, body) {
     if (error) {
-      console.error(error);
-      return formatErrorResponse({response: res, message: 'Error when requesting the README.md', repo: req.params.repo});
+      return formatErrorResponse({response: res, message: error, repo: req.params.repo});
     }
     if (response.statusCode===404) {
-      console.warn('README content for repo', req.params.repo, 'not found');
       return formatErrorResponse({response: res, message: 'README.md not found', repo: req.params.repo, code: 404});
     }
-    
     else if (response.statusCode!==200) {
-      console.warn('Error getting README content for', req.params.repo);
       formatErrorResponse({response:res, message: response.body, repo: req.params.repo, code: response.statusCode, contentType: 'text/html'});
     }
     else {
@@ -93,20 +87,17 @@ router.get('/last-commit/:repo', function(req, res) {
   options.url = host + 'repos/altany/' + req.params.repo + '/commits?' + auth;
   request(options, function (error, response, body) {
     if (error) {
-      console.error(error);
-      return formatErrorResponse(res, 'Error when requesting the commits history', req.params.repo);
+      return formatErrorResponse({response: res, message: error, repo: req.params.repo});
     }
-    let commit = JSON.parse(body)[0];
     let result = {};
     if (response.statusCode===404) {
-      console.warn('Commit history for repo', req.params.repo, 'not found');
-      return formatErrorResponse(res, 'Commit history not found', req.params.repo, 404);
+      return formatErrorResponse({response: res, message: 'Commit history not found', repo: req.params.repo, code: 404});
     }
     else if (response.statusCode!==200) {
-      console.warn('Error getting the commits list for', req.params.repo);
-      result.message = 'There was an error while getting this repo\'s README file';
+      return formatErrorResponse({response: res, message: response.body, repo: req.params.repo, code: response.statusCode, contentType: 'text/html'});
     }
     else {
+      let commit = JSON.parse(body)[0];
       result = {
           link: commit.html_url,
           date: timeAgo(commit.commit.author.date),
