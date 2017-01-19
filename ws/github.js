@@ -44,7 +44,9 @@ marked.setOptions({
 });
 
 function formatErrorResponse(response, message, repo, code, contentType) {
-  return response.status(code?code:500).header( 'Content-Type', contentType?contentType:'text/plain' ).end(message + (repo?' for repo "' + repo + '"':''));
+  response.statusCode = code?code:500;
+  response.setHeader( 'Content-Type', contentType?contentType:'text/plain' )
+   return response.end(message + (repo?' for repo "' + repo + '"':''));
 }
 
 router.get('/repos', function(req, res) {
@@ -77,7 +79,8 @@ router.get('/readme/:repo', function(req, res) {
       formatErrorResponse(res, response.body, req.params.repo, response.statusCode, 'text/html');
     }
     else {
-      res.header( 'Content-Type', 'text/html' ).end(marked(body).toString());
+      res.setHeader( 'Content-Type', 'text/html' );
+      res.end(marked(body).toString());
     }
   });
 });
@@ -87,13 +90,13 @@ router.get('/last-commit/:repo', function(req, res) {
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return formatErrorResponse(res, 'requesting the commits history', req.params.repo);
+      return formatErrorResponse(res, 'Error when requesting the commits history', req.params.repo);
     }
-    res.setHeader( 'Content-Type', 'application/json' );
     let commit = JSON.parse(body)[0];
     let result = {};
     if (response.statusCode===404) {
-      res.status(500).end('No description available  .');
+      console.warn('Commit history for repo', req.params.repo, 'not found');
+      return formatErrorResponse(res, 'Commit history not found', req.params.repo, 404);
     }
     else if (response.statusCode!==200) {
       console.warn('Error getting the commits list for', req.params.repo);
@@ -106,6 +109,7 @@ router.get('/last-commit/:repo', function(req, res) {
           message: commit.commit.message
         }
     }
+    res.setHeader( 'Content-Type', 'application/json' );
     res.end(JSON.stringify(result));
   });
 });

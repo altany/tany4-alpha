@@ -36,6 +36,17 @@ describe('Github API', function() {
         });
     });
   });
+  describe('#GET /readme/:nonExistentRepo', function() {
+    it('should return a 404', function(done) {
+      chai.request(server)
+        .get('/readme/nonExistentRepo')
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.should.be.text;
+          done();
+        });
+    });
+  });
   
   describe('#GET /last-commit/:repo', function() {
     it('should get last commit info for the given repo\s master branch', function(done) {
@@ -50,5 +61,15 @@ describe('Github API', function() {
         });
     });
   });
-
+  describe('#GET /last-commit/:nonExistentRepo', function() {
+    it('should return a 404', function(done) {
+      chai.request(server)
+        .get('/last-commit/nonExistentRepo')
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.should.be.text;
+          done();
+        });
+    });
+  });
 });
