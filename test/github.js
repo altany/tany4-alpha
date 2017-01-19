@@ -41,8 +41,7 @@ describe('Github API', function() {
       chai.request(server)
         .get('/readme/nonExistentRepo')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.should.be.text;
+          err.should.have.status(404);
           done();
         });
     });
@@ -66,8 +65,7 @@ describe('Github API', function() {
       chai.request(server)
         .get('/last-commit/nonExistentRepo')
         .end((err, res) => {
-          res.should.have.status(404);
-          res.should.be.text;
+          err.should.have.status(404);
           done();
         });
     });
