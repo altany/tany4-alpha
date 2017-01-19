@@ -43,10 +43,10 @@ marked.setOptions({
   smartypants: false
 });
 
-function formatErrorResponse(response, message, repo, code, contentType) {
-  response.statusCode = code?code:500;
-  response.setHeader( 'Content-Type', contentType?contentType:'text/plain' )
-   return response.end(message + (repo?' for repo "' + repo + '"':''));
+function formatErrorResponse( { response, message = '', repo, code=500, contentType= 'text/plain'} = {}) {
+  response.statusCode = code;
+  response.setHeader( 'Content-Type', contentType )
+  return response.end(message + (repo?' for repo "' + repo + '"':''));
 }
 
 router.get('/repos', function(req, res) {
@@ -54,7 +54,11 @@ router.get('/repos', function(req, res) {
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return formatErrorResponse(res, 'getting the repos');
+      return formatErrorResponse({response: res, message: 'Error getting the repos'});
+    }
+    else if (response.statusCode!==200) {
+      console.warn('Failed while getting the repos');
+      return formatErrorResponse({response: res, message: response.body, code: response.statusCode, contentType: 'text/html'});
     }
     res.setHeader( 'Content-Type', 'application/json' );
     res.end(body);
@@ -67,16 +71,16 @@ router.get('/readme/:repo', function(req, res) {
   request(options, function (error, response, body) {
     if (error) {
       console.error(error);
-      return formatErrorResponse(res, 'Error when requesting the README.md', req.params.repo);
+      return formatErrorResponse({response: res, message: 'Error when requesting the README.md', repo: req.params.repo});
     }
     if (response.statusCode===404) {
       console.warn('README content for repo', req.params.repo, 'not found');
-      formatErrorResponse(res, 'README.md not found', req.params.repo, 404);
+      return formatErrorResponse({response: res, message: 'README.md not found', repo: req.params.repo, code: 404});
     }
     
     else if (response.statusCode!==200) {
       console.warn('Error getting README content for', req.params.repo);
-      formatErrorResponse(res, response.body, req.params.repo, response.statusCode, 'text/html');
+      formatErrorResponse({response:res, message: response.body, repo: req.params.repo, code: response.statusCode, contentType: 'text/html'});
     }
     else {
       res.setHeader( 'Content-Type', 'text/html' );
