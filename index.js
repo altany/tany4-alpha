@@ -70,6 +70,7 @@ app.get('/:page?', function (req, res, next) {
     request.get('http://' + req.headers.host + '/api/github/repos', function (error, response, body) {
       if (error || response.statusCode!==200) {
         let message = 'Error loading the repos...';
+        console.warn(message);
         return res.render('github', {page: 'github', warning: message})
       }
     
@@ -78,13 +79,13 @@ app.get('/:page?', function (req, res, next) {
         async.each( repos, function(repo, callback){
           request.get('http://' + req.headers.host + '/api/github/readme/' + repo.name, function (error, response, body) {
             if (error || response.statusCode!==200) {
-              repo.readme = 'Error reading the description...'
-              console.error('Error reading the description of ' + repo.name);
+              repo.readme = 'No description available'
+              console.error('No description for ' + repo.name);
             }
             else repo.readme = body;
             request.get('http://' + req.headers.host + '/api/github/last-commit/' + repo.name, function (e, r, b) {
               if(e || r.statusCode!==200) {
-                repo.lastCommit = {message: 'Error getting the last commit info...'};
+                repo.lastCommit = {message: 'No commit info...'};
                 console.error('Error get the last commit for ' + repo.name);
               }
               else {
