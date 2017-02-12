@@ -13,6 +13,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 console.log('Hello World!');
-//var url = require("./../sass/icomoonfonts/icomoon.svg");
-//console.log('!!!!!!!',url);
 document.getElementsByTagName('body')[0].classList.add(isTouchDevice()?'touch':'no-touch');

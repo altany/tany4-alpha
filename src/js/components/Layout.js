@@ -10,7 +10,7 @@ const Layout = React.createClass({
       <div>
         <div className='wrapper'>
           <Header />
-          <div className='pageContent'>
+          <div className='pageContent' id='home'>
             {this.props.children}
           </div>
           <div className='push'></div>
