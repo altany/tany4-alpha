@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 
 class Home extends React.Component {
@@ -23,7 +23,7 @@ class Home extends React.Component {
               I currently work as a Full Stack Web Developer, using Node.js, ReactJS, AngularJS, jQuery, Sass and more.
             </p>
           </div>
-          <Link to='/social'>Let's connect</Link>
+          <Link to='/social' className='connect'>Let's connect</Link>
         </div>
       </div>
     );
