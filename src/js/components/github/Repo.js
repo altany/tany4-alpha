@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Fetcher from '../shared/Fetcher.js';
+import LastCommit from './LastCommit.js';
 
 function Repo (props) {
   let repo = props.repo;
@@ -10,9 +11,10 @@ function Repo (props) {
         <Link to={repo.html_url}>
           {repo.name}
         </Link>
-        <div className='lastCommit'>
-          <Fetcher url={window.location.origin + '/api/github/last-commit/' + repo.name} />
-        </div>
+        <Fetcher url={window.location.origin + '/api/github/last-commit/' + repo.name} >
+          <LastCommit data={{}} />
+        </Fetcher>
+
       </h3>
       
     </div>
