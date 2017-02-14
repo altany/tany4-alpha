@@ -18,6 +18,9 @@ app.use(favicon(path.join(__dirname,'www','images','favicon.ico')));
 
 app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, 'www', 'files', 'TaniaPapazafeiropoulouCV.pdf')));
 
+let githubApiRoutes = require('./ws/github');
+app.use('/api/github', githubApiRoutes);
+
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
   filename: 'bundle.js',
