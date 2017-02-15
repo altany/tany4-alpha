@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import Loading from 'react-loading';
 import ShowError from './ShowError.js';
+
 
 class Fetcher extends React.Component {
   constructor(props) {
@@ -42,7 +44,7 @@ class Fetcher extends React.Component {
     }
 
     if (this.state.isLoading) {
-      return <p>Loading...</p>;
+      return <Loading type='bubbles' color='#e3e3e3' width={30}/>;
     }
     if (this.props.children) {
       return (
