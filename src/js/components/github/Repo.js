@@ -4,6 +4,13 @@ import Fetcher from '../shared/Fetcher.js';
 import LastCommit from './LastCommit.js';
 
 function ReadMe(props) {
+  if (props.error) {
+    return (
+      <div className='readme' >
+        {props.error}
+      </div>
+    );
+  }
   return (
     <div className='readme' dangerouslySetInnerHTML={{ __html: props.data }} />
   );
@@ -21,7 +28,7 @@ function Repo(props) {
           <LastCommit data={{}} />
         </Fetcher>
       </h3>
-      <Fetcher url={window.location.origin + '/api/github/readme/' + repo.name} >
+      <Fetcher url={window.location.origin + '/api/github/readme/' + repo.name} errorMessage='No description available' showDefaultError={false}>
           <ReadMe data ={{}} />
       </Fetcher>
     </div>

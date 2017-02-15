@@ -13,7 +13,8 @@ class Fetcher extends React.Component {
       isLoading: true,
       hasFailed: false,
       error: null,
-      data: null
+      data: null,
+      showDefaultError: ('showDefaultError' in props) ? props.showDefaultError : true
     };
   }
 
@@ -30,7 +31,7 @@ class Fetcher extends React.Component {
         this.setState({
           isLoading: false,
           hasFailed: true,
-          error: error.message,
+          error: this.props.errorMessage || error.message,
           data: null
         });
       });
@@ -40,7 +41,19 @@ class Fetcher extends React.Component {
     let state = this.state;
     
     if (this.state.hasFailed) {
-      return <ShowError error={state.error}/>
+      console.log(state.showDefaultError);
+      if (state.showDefaultError) {
+        return <ShowError error={state.error}/>
+      }
+      return (
+        <div className="ErrorLoader">
+          {
+            React.Children.map(this.props.children, function (child) {
+              return React.cloneElement(child, state);
+            })
+          }
+        </div>
+      );
     }
 
     if (this.state.isLoading) {

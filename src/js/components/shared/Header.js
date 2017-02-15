@@ -14,8 +14,8 @@ class Header extends React.Component {
           <div className='social'>
             <Link className='socialLink' to='/social'>Let's connect</Link>
             <div className='socialLogos'>
-              <Link className='icon icon-stackoverflow' to='http://stackoverflow.com/story/tany4' />
-              <Link className='icon icon-linkedin2' to='http://www.linkedin.com/in/taniapapazaf' />
+              <a className='icon icon-stackoverflow' href='http://stackoverflow.com/story/tany4' />
+              <a className='icon icon-linkedin2' href='http://www.linkedin.com/in/taniapapazaf' />
               <Link className='icon icon-github' to='/github' />
             </div>
           </div>

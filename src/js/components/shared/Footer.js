@@ -6,9 +6,9 @@ class Footer extends React.Component {
     return (
       <footer>
         <div className='copyright'> Created by
-      		<Link to='http://www.linkedin.com/in/taniapapazaf'>
+      		<a href='http://www.linkedin.com/in/taniapapazaf'>
             Tania Papazafeiropoulou
-          </Link>
+          </a>
         </div>
       </footer>
     );
