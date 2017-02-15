@@ -14,9 +14,9 @@ function Repo(props) {
   return (
     <div className='repoContainer'>
       <h3 className='repoName'>
-        <Link to={repo.html_url}>
+        <a href={repo.html_url}>
           {repo.name}
-        </Link>
+        </a>
         <Fetcher url={window.location.origin + '/api/github/last-commit/' + repo.name} >
           <LastCommit data={{}} />
         </Fetcher>
