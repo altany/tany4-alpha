@@ -1,0 +1,133 @@
+$path: 'icomoonfonts/icomoon.'
+$version: 'y2d4pi'
+@font-face
+  font-family: 'icomoon'
+  src: url(#{$path}eot?#{$version})
+  src: url(#{$path}eot?#{$version}#iefix) format("embedded-opentype"), url(#{$path}ttf?#{$version}) format("truetype"), url(#{$path}woff?#{$version}) format("font-woff"), url(#{$path}svg?#{$version}#icomoon) format("svg")
+  font-weight: normal
+  font-style: normal
+
+@import "icomoon"
+@import "layout"
+
+.warning
+	background: #fff4cc
+    border-color: #ffe070
+	padding: 10px
+
+.rainbow
+  background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #ef639a), color-stop(0.2, #ef639a), color-stop(0.4, #a479b4), color-stop(0.6, #a479b4), color-stop(0.7, #8b008b),color-stop(0.8, #8b008b), color-stop(1, #ef639a) )
+  background-image: gradient( linear, left top, right top, color-stop(0, #ef639a), color-stop(0.2, #ef639a), color-stop(0.4, #a479b4), color-stop(0.6, #a479b4), color-stop(0.7, #8b008b),color-stop(0.8, #8b008b), color-stop(1, #ef639a) )
+  color: transparent
+  -webkit-background-clip: text
+  background-clip: text
+
+
+#home
+	.profileImg
+		float: left
+		width: 250px
+		img
+			max-width: 100%
+			height: auto
+	.connect
+			font-weight: bold
+			text-align: center
+			display: block
+			margin-top: 50px
+			margin-bottom: 25px
+			color: #ad1477
+			font-size: 25px
+	@include breakpoint(phablet)
+		margin-top: 40px
+		.profileImg
+			max-width: 30%
+		.info
+			float: right
+			width: 65%
+	@include breakpoint(mobileonly)
+		.profileImg
+			width: 120px
+			img
+				width: 100px
+		h1
+			font-size: 19px
+		h2
+			font-size: 15px
+		.connect
+			font-size: 16px
+.no-touch
+	.connect
+			display: none
+#social
+	h1
+		margin: 50px 0
+	.link
+		margin-bottom: 20px
+		position: relative
+	a.icon
+		//display: block
+		font-size: 35px
+
+		&.icon-profile
+			color: $cvGray
+		&.icon-linkedin2
+			color: $linkedInBlue
+		&.icon-github
+			color: $githubPurple
+		&.icon-stackoverflow
+			color: $stackOverflowOrange
+		&.icon-envelop
+			color: $googleRed
+		label
+			font-size: 18px
+			margin-left: 15px
+			color: black
+			cursor: pointer
+			position: absolute
+			top: 10px
+	@include breakpoint(mobileonly)
+		h1
+			margin: 10px 0 30px 0
+			font-size: 25px
+		.link
+			margin-bottom: 15px
+#github
+	img
+		max-width: 100%
+
+	.intro img
+		height: 40px
+	.repoContainer
+		margin-bottom: 20px
+		.repoName, .readme
+			width: calc(100% - 40px)
+		.repoName
+			//width: 100%
+			background-color: $githubLightBlue
+			padding: 20px
+			border: 1px solid $githubBlue
+			+border-radius($side: '-top-right')
+			+border-radius($side: '-top-left')
+			margin: 0
+			a
+				color: #333
+			.lastCommit
+				font-size: 11px
+				color: $githubGray
+				a
+					color: $githubLinkBlue
+					font-size: 12px
+		.readme
+			font-size: 13px
+			display: inline-block
+			//width: 100%
+			border: 1px solid #ddd
+			+border-radius($side: '-bottom-right')
+			+border-radius($side: '-bottom-left')
+			padding: 10px 20px
+			h1
+				font-size: 20px
+	@include breakpoint(mobileonly)
+		iframe
+			max-width: 100%

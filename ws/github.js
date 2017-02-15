@@ -109,5 +109,12 @@ router.get('/last-commit/:repo', function(req, res) {
   });
 });
 
-
+router.use(function(req, res, next) {
+  let err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+router.use(function(err, req, res, next) {
+  res.sendStatus(err.status || 500);
+});
 module.exports = router;
