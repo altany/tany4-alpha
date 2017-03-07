@@ -29,7 +29,7 @@ let config = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin(path.join(__dirname, '..', 'www', 'style.css'), {
+    new ExtractTextPlugin('./style.css', {
       allChunks: true
     })
   ],
