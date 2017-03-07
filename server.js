@@ -1,5 +1,8 @@
 let express = require('express');
 let path = require('path');
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
+
 let webpackDevMiddleware = require('webpack-dev-middleware');
 let webpack = require('webpack');
 let webpackConfig = require('./webpack.config.js');
@@ -15,8 +18,6 @@ app.use(express.static(__dirname + '/www'));
 
 let favicon = require('serve-favicon');
 app.use(favicon(path.join(__dirname,'www','images','favicon.ico')));
-
-process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
 
 app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, 'www', 'files', 'TaniaPapazafeiropoulouCV.pdf')));
 

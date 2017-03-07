@@ -4,6 +4,7 @@
   "description": "This is my personal website",
   "main": "index.js",
   "scripts": {
+    "postinstall": "webpack",
     "test": "mocha",
     "compile": "webpack",
     "start": "node server.js",
