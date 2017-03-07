@@ -1,7 +1,8 @@
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+let path = require('path');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let webpack = require('webpack');
 
-var config = {
+let config = {
   context: path.join(__dirname, 'src'),
   entry: [
     './js/main.js'
@@ -10,7 +11,7 @@ var config = {
     path: path.join(__dirname, 'www'),
     filename: 'bundle.js'
   },
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   module: {
     loaders: [
       {

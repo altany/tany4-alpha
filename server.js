@@ -16,20 +16,25 @@ app.use(express.static(__dirname + '/www'));
 let favicon = require('serve-favicon');
 app.use(favicon(path.join(__dirname,'www','images','favicon.ico')));
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
+
 app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, 'www', 'files', 'TaniaPapazafeiropoulouCV.pdf')));
 
 let githubApiRoutes = require('./ws/github');
 app.use('/api/github', githubApiRoutes);
 
-app.use(webpackDevMiddleware(compiler, {
-  hot: true,
-  filename: 'bundle.js',
-  publicPath: '/',
-  stats: {
-    colors: true,
-  },
-  historyApiFallback: true,
-}));
+if (process.env.NODE_ENV==='dev') {
+  app.use(webpackDevMiddleware(compiler, {
+    hot: true,
+    filename: 'bundle.js',
+    publicPath: '/',
+    stats: {
+      colors: true,
+    },
+    historyApiFallback: true,
+  }));
+}
+
 
 
 /** Always serve the same HTML file for all requests */
