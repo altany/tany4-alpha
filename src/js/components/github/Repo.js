@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import Fetcher from '../shared/Fetcher.js';
 import LastCommit from './LastCommit.js';
 

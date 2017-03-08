@@ -39,7 +39,7 @@ if (process.env.NODE_ENV==='dev') {
 
 
 /** Always serve the same HTML file for all requests */
-app.get('*', function(req, res, next) {
+app.get('*', function(req, res) {
   console.log('Request: [GET]', req.originalUrl);
   res.sendFile(path.join(__dirname, 'www', 'index.html'));
 });
@@ -52,7 +52,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   res.sendStatus(err.status || 500);
 });
 
