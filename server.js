@@ -1,18 +1,9 @@
 let express = require('express');
 let path = require('path');
-
-process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
-
-let webpackDevMiddleware = require('webpack-dev-middleware');
-let webpack = require('webpack');
-let webpackConfig = require('./webpack.config.js');
 let app = express();
-
 let ua = require('universal-analytics');
 let gaID = process.env.GA_ACCOUNT_ID;
 let visitor = ua(gaID).debug(); //To log the tracking info for testing
-
-let compiler = webpack(webpackConfig);
 
 app.use(express.static(__dirname + '/www'));
 
@@ -23,20 +14,30 @@ app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, 'www',
 
 let githubApiRoutes = require('./ws/github');
 app.use('/api/github', githubApiRoutes);
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 if (process.env.NODE_ENV==='dev') {
+  let webpack = require('webpack');
+  let webpackDevMiddleware = require('webpack-dev-middleware');
+  let webpackConfig = require('./webpack.config.js');
+  // webpackConfig.entry.app.unshift("webpack-dev-server/client?http://localhost:8080/");
+  var compiler = webpack(webpackConfig);
+  let webpackHotMiddleware = require('webpack-hot-middleware');
+
   app.use(webpackDevMiddleware(compiler, {
+    publicPath: "/",
     hot: true,
-    filename: 'bundle.js',
-    publicPath: '/',
-    stats: {
-      colors: true,
+    headers: {
+       "Access-Control-Allow-Origin": "*"
     },
-    historyApiFallback: true,
+    stats: {
+       colors: true,
+     },
+     historyApiFallback: true
   }));
+
+  app.use(webpackHotMiddleware(compiler))
 }
-
-
 
 /** Always serve the same HTML file for all requests */
 app.get('*', function(req, res) {
@@ -58,8 +59,6 @@ app.use(function(err, req, res) {
 
 /** Start server */
 app.set('port', (process.env.PORT || 3000));
-let server = app.listen(app.get('port'), function() {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('Example app listening at http://%s:%s', host, port);
+app.listen(app.get('port'), function() {
+  console.log('Tany4 listening on port', app.get('port'));
 });

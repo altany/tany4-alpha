@@ -2,13 +2,13 @@ import React from 'react';
 
 function LastCommitInfo (props) {
   let info=props.info;
-  
+
   if (info.link) {
     return (
       <span>
         Latest commit:
         <a href={info.link}>
-          {info.message}
+          {' ' + info.message}
         </a>
       </span>
     );
@@ -16,7 +16,7 @@ function LastCommitInfo (props) {
   else {
     return (
       <div>
-        Latest commit: {info.message} 
+        Latest commit: {info.message}
       </div>
     );
   }
@@ -27,7 +27,7 @@ function LastCommit (props) {
   return (
     <div className='lastCommit'>
       <LastCommitInfo info={props.data} />
-      {props.data.date || ''}
+      {' ' + props.data.date || ''}
     </div>
   );
 }

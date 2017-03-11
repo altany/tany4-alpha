@@ -1,14 +1,19 @@
 let path = require('path');
+var webpack = require('webpack');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 let config = {
   context: path.join(__dirname, '..', 'src'),
-  entry: [
-    './js/main.js'
-  ],
+  entry: {
+    app: [
+      'webpack-hot-middleware/client',
+      './js/main.js'
+    ]
+  },
   output: {
-    path: path.join(__dirname, '..', 'www'),
-    filename: 'bundle.js'
+    path: '/',
+    filename: 'bundle.js',
+    publicPath: path.join(__dirname, '..', 'www')
   },
   devtool: 'cheap-module-source-map',
   module: {
@@ -16,32 +21,32 @@ let config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel']
+        loaders: ['babel-loader']
       },
       {
         test: /\.sass$/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
       },
       {
         test: /\.(eot|svg|ttf|woff)/,
-        loader: 'file?name=fonts/[name].[ext]'
+        loader: 'file-loader?name=fonts/[name].[ext]'
       }
     ],
   },
   plugins: [
-    new ExtractTextPlugin('./style.css', {
+    new ExtractTextPlugin({
+      filename:'./style.css',
       allChunks: true
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+
   ],
-  resolveLoader: {
-    root: [
-      path.join(__dirname, '..', 'node_modules')
-    ],
-  },
   resolve: {
-    root: [
-      path.join(__dirname, '..', 'node_modules')
-    ],
-  },
+    modules: [
+      path.join(__dirname, ".."),
+      "node_modules"
+    ]
+  }
 };
 module.exports = config;
