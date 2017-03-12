@@ -10,7 +10,7 @@ app.use(express.static(__dirname + '/www'));
 let favicon = require('serve-favicon');
 app.use(favicon(path.join(__dirname,'www','images','favicon.ico')));
 
-app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, 'www', 'files', 'TaniaPapazafeiropoulouCV.pdf')));
+app.use('/TaniaPapazafeiropoulou-CV', express.static(path.join(__dirname, 'www', 'files', 'TaniaPapazafeiropoulou-CV.pdf')));
 
 let githubApiRoutes = require('./ws/github');
 app.use('/api/github', githubApiRoutes);
