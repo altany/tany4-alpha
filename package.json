@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/altany/tany4.git"
   },
+  "engines" : { "node" : ">=7.4.0" } ,
   "author": "Tania Papazafeiropoulou",
   "license": "ISC",
   "bugs": {
