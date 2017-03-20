@@ -1,5 +1,14 @@
+$path: '/fonts/icomoon.'
+$version: 'y2d4pi'
+@font-face
+  font-family: 'icomoon'
+  src: url(#{$path}eot?#{$version})
+  src: url(#{$path}eot?#{$version}#iefix) format("embedded-opentype"), url(#{$path}ttf?#{$version}) format("truetype"), url(#{$path}woff?#{$version}) format("font-woff"), url(#{$path}svg?#{$version}#icomoon) format("svg")
+  font-weight: normal
+  font-style: normal
+
+@import "icomoon"
 @import "layout"
-@import "iconmoon"
 
 .warning
 	background: #fff4cc
@@ -59,7 +68,7 @@
 	a.icon
 		//display: block
 		font-size: 35px
-		
+
 		&.icon-profile
 			color: $cvGray
 		&.icon-linkedin2
@@ -86,7 +95,7 @@
 #github
 	img
 		max-width: 100%
-	
+
 	.intro img
 		height: 40px
 	.repoContainer
