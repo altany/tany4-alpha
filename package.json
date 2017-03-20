@@ -9,7 +9,8 @@
     "compile": "webpack",
     "start": "node server.js",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
+    "heroku-postbuild": "npm run compile"
   },
   "repository": {
     "type": "git",
