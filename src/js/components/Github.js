@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import Fetcher from './shared/Fetcher.js';
 import RepoList from './github/RepoList.js';
 
@@ -18,9 +17,9 @@ class Github extends React.Component {
 
         <p>
           {'This page contains a list of my Github repos. All the data is retrieved through the '}
-          <Link to='https://developer.github.com/v3/'>
+          <a href='https://developer.github.com/v3/'>
             Github API v3
-          </Link>
+          </a>
         </p>
 
 
