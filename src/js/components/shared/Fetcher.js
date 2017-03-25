@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Loading from 'react-loading';
 import ShowError from './ShowError.js';
