@@ -10,7 +10,7 @@ class Social extends React.Component {
 
           <div className='link'>
             <a className='icon icon-profile' href='/TaniaPapazafeiropoulou-CV'>
-              <label>My CV</label>
+              <label>CV</label>
             </a>
           </div>
 
