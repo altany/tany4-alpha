@@ -13,7 +13,7 @@ class Github extends React.Component {
           </a>
         </p>
 
-        <h2>Github API Playgound</h2>
+        <h2>Github API Playground</h2>
 
         <p>
           {'This page contains a list of my Github repos. All the data is retrieved through the '}
