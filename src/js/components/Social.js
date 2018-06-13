@@ -5,7 +5,6 @@ class Social extends React.Component {
   render() {
     return (
       <div>
-        <h1>Let's connect</h1>
         <div className='links'>
 
           <div className='link'>
