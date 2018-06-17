@@ -1,14 +1,33 @@
 import React from 'react';
 import Repo from './Repo';
 
-function RepoList(props) {
-  return (  
-    <div>
-      {props.data.map((repo, i)=>{
-        return <Repo key={i} repo={repo} />;   
-      })}
-    </div>
-  );
+class RepoList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      statusAll: false
+    };
+
+    this.toggleAll = this.toggleAll.bind(this);
+  }
+
+  toggleAll() {
+    this.setState({
+      statusAll: !this.state.statusAll
+    });
+  }
+
+  render() {
+    return (
+      <div className="repos-container">
+        <a id="toggleAllRepos" onClick={ this.toggleAll }>{this.state.statusAll ? 'collapse' : 'expand'} all</a>
+        {this.props.data.map((repo, i)=>{
+          return <Repo key={i} repo={repo} expandStatus={this.state.statusAll}/>;
+        })}
+      </div>
+    );
+  }
 }
 
 export default RepoList;

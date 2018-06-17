@@ -115,38 +115,67 @@ $version: 'y2d4pi'
 
 	.intro img
 		height: 40px
-	.repoContainer
-		margin-bottom: 20px
-		.repoName, .readme
-			width: calc(100% - 40px)
-		.repoName
-			//width: 100%
+	.repos-container
+		position: relative
+		padding-top: 40px
+	#toggleAllRepos
+		display: block
+		border: 1px solid #a479b4
+		color: #a479b4
+		border-radius: 4px
+		padding: 5px
+		width: 100px
+		cursor: pointer
+		text-transform: capitalize
+		text-align: center
+		position: absolute
+		top: 0
+		right: 0
+		font-size: 12px
+		&:hover
 			background-color: $githubLightBlue
-			padding: 20px
+	.repoContainer
+		.repoName
+			width: calc(100% - 20px)
+			background-color: $githubLightBlue
+			padding: 10px
 			border: 1px solid $githubBlue
-			+border-radius($side: '-top-right')
-			+border-radius($side: '-top-left')
 			margin: 0
+			font-size: 15px
 			a
 				color: #333
 			.lastCommit
-				font-size: 11px
+				font-size: 10px
 				color: $githubGray
 				a
 					color: $githubLinkBlue
-					font-size: 12px
+					font-size: 10px
 		.readme
+			width: calc(100% - 40px)
 			font-size: 13px
 			display: inline-block
 			//width: 100%
-			border: 1px solid #ddd
-			+border-radius($side: '-bottom-right')
-			+border-radius($side: '-bottom-left')
+			border-right: 1px solid #ddd
+			border-left: 1px solid #ddd
 			padding: 10px 20px
 			pre
 				white-space: pre-wrap
 			h1
-				font-size: 20px
+				font-size: 18px
+		&:first-of-type
+			.repoName
+				+border-radius($side: '-top-right')
+				+border-radius($side: '-top-left')
+		&:last-of-type
+			&:not(.expanded)
+				.repoName
+					+border-radius($side: '-bottom-right')
+					+border-radius($side: '-bottom-left')
+			.readme
+				+border-radius($side: '-bottom-right')
+				+border-radius($side: '-bottom-left')
+				border-bottom: 1px solid #ddd
+
 	@include breakpoint(mobileonly)
 		iframe
 			max-width: 100%

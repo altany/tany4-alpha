@@ -39,8 +39,7 @@ class Fetcher extends React.Component {
   render() {
     let state = this.state;
     
-    if (this.state.hasFailed) {
-      console.log(state.showDefaultError);
+    if (state.hasFailed) {
       if (state.showDefaultError) {
         return <ShowError error={state.error}/>
       }
