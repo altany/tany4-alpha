@@ -142,14 +142,19 @@ $version: 'y2d4pi'
 			border: 1px solid $githubBlue
 			margin: 0
 			font-size: 15px
+			cursor: pointer
 			a
 				color: #333
+				&:hover
+					color: $githubLinkBlue
 			.lastCommit
 				font-size: 10px
 				color: $githubGray
 				a
 					color: $githubLinkBlue
 					font-size: 10px
+					&:hover
+						color: $githubGray
 		.readme
 			width: calc(100% - 40px)
 			font-size: 13px
@@ -175,7 +180,9 @@ $version: 'y2d4pi'
 				+border-radius($side: '-bottom-right')
 				+border-radius($side: '-bottom-left')
 				border-bottom: 1px solid #ddd
-
+		&:not(:last-of-type):not(.expanded)
+			.repoName
+				border-bottom: none
 	@include breakpoint(mobileonly)
 		iframe
 			max-width: 100%
