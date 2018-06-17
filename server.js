@@ -3,7 +3,7 @@ let path = require('path');
 let app = express();
 let ua = require('universal-analytics');
 let gaID = process.env.GA_ACCOUNT_ID;
-let visitor = ua(gaID).debug(); //To log the tracking info for testing
+let visitor = ua(gaID);
 
 app.use(express.static(__dirname + '/www'));
 
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV==='dev') {
   let webpackDevMiddleware = require('webpack-dev-middleware');
   let webpackConfig = require('./webpack.config.js');
   // webpackConfig.entry.app.unshift("webpack-dev-server/client?http://localhost:8080/");
-  var compiler = webpack(webpackConfig);
+  var compiler = webpack(webpackConfig());
   let webpackHotMiddleware = require('webpack-hot-middleware');
 
   app.use(webpackDevMiddleware(compiler, {

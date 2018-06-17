@@ -1,6 +1,6 @@
 let path = require('path');
 var webpack = require('webpack');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let config = {
   context: path.join(__dirname, 'src'),
@@ -17,11 +17,10 @@ let config = {
       },
       {
         test: /\.sass$/,
-        //loader: ExtractTextPlugin.extract('css-loader!sass-loader')
-        use: ExtractTextPlugin.extract({
-           use:"css-loader!sass-loader",
-           fallback: 'style-loader'
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader", "sass-loader"
+        ]
       },
       {
         test: /\.(eot|svg|ttf|woff)/,
@@ -33,7 +32,7 @@ let config = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename:'style.css',
       disable: false,
       allChunks: true
@@ -47,8 +46,33 @@ let config = {
   }
 };
 
-switch (process.env.NODE_ENV) {
-  case 'dev':
+module.exports = [{
+  output: {
+    filename: './dist-amd.js',
+    libraryTarget: 'amd'
+  },
+  entry: './app.js',
+  mode: 'production',
+}, {
+  output: {
+    filename: './dist-commonjs.js',
+    libraryTarget: 'commonjs'
+  },
+  entry: './app.js',
+  mode: 'production',
+}];
+module.exports = (env, argv) => {
+  config.mode = argv && argv.mode || 'production';
+  if (config.mode === 'production') {
+    config.entry= {
+      app: [
+        './js/main.js'
+      ]
+    };
+    config.devtool= 'source-map';
+    config.output.path= path.join(__dirname, 'www');
+  }
+  if (config.mode === 'development') {
     config.entry= {
       app: [
         'webpack-hot-middleware/client',
@@ -61,15 +85,7 @@ switch (process.env.NODE_ENV) {
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin()
     );
-  break;
-  case 'production':
-  default:
-  config.entry= {
-    app: [
-      './js/main.js'
-    ]
   }
-  config.devtool= 'source-map';
-  config.output.path= path.join(__dirname, 'www');
-}
-module.exports = config;
+
+  return config;
+};
