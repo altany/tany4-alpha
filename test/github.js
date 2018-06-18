@@ -2,10 +2,10 @@
 process.env.NODE_ENV = 'test';
 
 //Require the dev-dependencies
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var should = chai.should();
-var server = require('../ws/github.js');
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let should = chai.should();
+let server = require('../ws/github.js');
 chai.use(chaiHttp);
 
 describe('Github API', function() {
@@ -41,7 +41,7 @@ describe('Github API', function() {
       chai.request(server)
         .get('/readme/nonExistentRepo')
         .end((err, res) => {
-          err.should.have.status(404);
+          res.should.have.status(404);
           done();
         });
     });
@@ -54,7 +54,7 @@ describe('Github API', function() {
         .end((err, res) => {
           if (err) done(err);
           res.should.have.status(200);
-          res.should.be.object;
+          res.should.be.an('object');
           res.body.should.have.property('message');
           done();
         });
@@ -65,7 +65,7 @@ describe('Github API', function() {
       chai.request(server)
         .get('/last-commit/nonExistentRepo')
         .end((err, res) => {
-          err.should.have.status(404);
+          res.should.have.status(404);
           done();
         });
     });
