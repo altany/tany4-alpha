@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 ShowError.propTypes = {
-  error: React.PropTypes.string
+  error: PropTypes.string
 };
 
 export default function ShowError(props){
