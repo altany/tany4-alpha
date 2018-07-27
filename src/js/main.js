@@ -15,25 +15,25 @@ function isTouchDevice() {
 	return 'ontouchstart' in window        // works on most browsers
 		|| navigator.maxTouchPoints;       // works on IE10/11 and Surface
 }
-console.log('test')
+
 const App = () => (
 	<BrowserRouter>
 		<div>
-      {/*<div className='wrapper'>
+      <div className='wrapper'>
 			 <Header />
-			 <div className='pageContent'>*/}
+			 <div className='pageContent'>
 			<Switch>
 				<Route exact path='/' component={Home} />
-				<Route path="social" component={Social} />
-				<Route path="github" component={Github} />
+				<Route path="/social" component={Social} />
+				<Route path="/github" component={Github} />
 			</Switch>
-      {/* </div>
+      </div>
 			 <div className='push'> </div>
 			 </div>
-			 <Footer />*/}
+			 <Footer />
 		</div>
 	</BrowserRouter>
 );
 ReactDOM.render(<App />, document.getElementById('root'));
-console.log('Hello World!');
+console.log('Tany4 - Welcome to my page!');
 document.getElementsByTagName('body')[0].classList.add(isTouchDevice()?'touch':'no-touch');

@@ -5,7 +5,7 @@ import RepoList from './github/RepoList.js';
 class Github extends React.Component {
   render() {
     return (
-      <div>
+      <div id='github'>
         <p className='intro'>
           {'Check out my Github profile on '}
           <a href='http://www.github.com/altany'>

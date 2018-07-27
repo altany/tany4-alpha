@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 class Social extends React.Component {
   render() {
     return (
-      <div>
+      <div id='social'>
         <div className='links'>
 
           <div className='link'>
