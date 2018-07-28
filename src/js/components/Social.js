@@ -20,8 +20,8 @@ class Social extends React.Component {
           </div>
 
           <div className='link'>
-            <a className='icon icon-stackoverflow' href='http://stackoverflow.com/story/tany4' title='Stackoverflow Story'>
-              <label>StackOverflow</label>
+            <a className='icon icon-envelop' href='mailto:hello@tany4.com?Subject=Tany4: Hi!' target='_top'>
+              <label>hello@tany4.com</label>
             </a>
           </div>
 
@@ -43,8 +43,8 @@ class Social extends React.Component {
           </div>
 
           <div className='link'>
-            <a className='icon icon-envelop' href='mailto:hello@tany4.com?Subject=Tany4: Hi!' target='_top'>
-              <label>hello@tany4.com</label>
+            <a className='icon icon-stackoverflow' href='http://stackoverflow.com/story/tany4' title='Stackoverflow Story'>
+              <label>StackOverflow</label>
             </a>
           </div>
 

@@ -1,11 +1,13 @@
-$path: '/fonts/icomoon.'
-$version: 'tj65eo'
+$icomoon-font-path: '/fonts/icomoon.' !default
+$icomoon-version: 'v5icks'
+
 @font-face
-  font-family: 'icomoon'
-  src: url(#{$path}eot?#{$version})
-  src: url(#{$path}eot?#{$version}#iefix) format("embedded-opentype"), url(#{$path}ttf?#{$version}) format("truetype"), url(#{$path}woff?#{$version}) format("font-woff"), url(#{$path}svg?#{$version}#icomoon) format("svg")
-  font-weight: normal
-  font-style: normal
+	font-family: "icomoon"
+	src: url('#{$icomoon-font-path}eot?#{$icomoon-version}')
+	src: url('#{$icomoon-font-path}eot?#{$icomoon-version}#iefix') format('embedded-opentype'), url('#{$icomoon-font-path}ttf?#{$icomoon-version}') format('truetype'), url('#{$icomoon-font-path}woff?#{$icomoon-version}') format('woff'), url('#{$icomoon-font-path}svg?#{$icomoon-version}') format('svg')
+	font-weight: normal
+	font-style: normal
+
 
 @import "icomoon"
 @import "layout"
@@ -83,7 +85,7 @@ $version: 'tj65eo'
 		&.icon-stackoverflow
 			color: $stackOverflowOrange
 		&.icon-envelop
-			color: $googleRed
+			color: $envelopTeal
 		&.icon-gitlab
 			color: $gitlabOrange
 		label
