@@ -19,6 +19,11 @@ class Social extends React.Component {
             </a>
           </div>
 
+          <div className='link'>
+            <a className='icon icon-stackoverflow' href='http://stackoverflow.com/story/tany4' title='Stackoverflow Story'>
+              <label>StackOverflow</label>
+            </a>
+          </div>
 
           <div className='link'>
             <Link className='icon icon-github' to='/github' title='Github'>
@@ -30,8 +35,10 @@ class Social extends React.Component {
           </div>
 
           <div className='link'>
-            <a className='icon icon-stackoverflow' href='http://stackoverflow.com/story/tany4' title='Stackoverflow Story'>
-              <label>StackOverflow</label>
+            <a className='icon icon-gitlab' href='https://gitlab.com/altany' title='Gitlab'>
+              <label>
+                Gitlab
+              </label>
             </a>
           </div>
 
