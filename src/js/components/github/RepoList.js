@@ -1,33 +1,37 @@
-import React from 'react';
-import Repo from './Repo';
+import React from 'react'
+import Repo from './Repo'
 
 class RepoList extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       statusAll: false
-    };
+    }
 
-    this.toggleAll = this.toggleAll.bind(this);
+    this.toggleAll = this.toggleAll.bind(this)
   }
 
-  toggleAll() {
+  toggleAll () {
     this.setState({
       statusAll: !this.state.statusAll
-    });
+    })
   }
 
-  render() {
+  render () {
     return (
-      <div className="repos-container">
-        <a id="toggleAllRepos" onClick={ this.toggleAll }>{this.state.statusAll ? 'collapse' : 'expand'} all</a>
-        {this.props.data.map((repo, i)=>{
-          return <Repo key={i} repo={repo} expandStatus={this.state.statusAll}/>;
+      <div className='repos-container'>
+        <a id='toggleAllRepos' onClick={this.toggleAll}>
+          {this.state.statusAll ? 'collapse' : 'expand'} all
+        </a>
+        {this.props.data.map((repo, i) => {
+          return (
+            <Repo key={i} repo={repo} expandStatus={this.state.statusAll} />
+          )
         })}
       </div>
-    );
+    )
   }
 }
 
-export default RepoList;
+export default RepoList

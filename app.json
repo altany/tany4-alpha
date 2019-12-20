@@ -1,12 +1,8 @@
 {
-"name": "My Personal Website",
-"description": "Building my personal website with Node and Express as backbone",
-"repository": "https://github.com/altany/tany4",
-"logo": "/images/heart-icon.png",
-"keywords": [
-"node",
-"express",
-"static"
-],
-"image": "heroku/nodejs"
+  "name": "My Personal Website",
+  "description": "Building my personal website with Node and Express as backbone",
+  "repository": "https://github.com/altany/tany4",
+  "logo": "/images/heart-icon.png",
+  "keywords": ["node", "express", "static"],
+  "image": "heroku/nodejs"
 }

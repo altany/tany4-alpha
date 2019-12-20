@@ -9,10 +9,10 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "**.js"
-  - "**.json"
-  - "**.pug"
-  - "**.sass"
+    - '**.js'
+    - '**.json'
+    - '**.pug'
+    - '**.sass'
 exclude_paths:
-- node_modules/**
-- test/**
+  - node_modules/**
+  - test/**

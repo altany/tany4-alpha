@@ -1,12 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 class Social extends React.Component {
-  render() {
+  render () {
     return (
       <div id='social'>
         <div className='links'>
-
           <div className='link'>
             <a className='icon icon-profile' href='/TaniaPapazafeiropoulou-CV'>
               <label>CV</label>
@@ -14,13 +13,21 @@ class Social extends React.Component {
           </div>
 
           <div className='link'>
-            <a className='icon icon-linkedin2' href='http://www.linkedin.com/in/taniapapazaf' title='LinkedIn'>
+            <a
+              className='icon icon-linkedin2'
+              href='http://www.linkedin.com/in/taniapapazaf'
+              title='LinkedIn'
+            >
               <label>LinkedIn</label>
             </a>
           </div>
 
           <div className='link'>
-            <a className='icon icon-envelop' href='mailto:hello@tany4.com?Subject=Tany4: Hi!' target='_top'>
+            <a
+              className='icon icon-envelop'
+              href='mailto:hello@tany4.com?Subject=Tany4: Hi!'
+              target='_top'
+            >
               <label>hello@tany4.com</label>
             </a>
           </div>
@@ -35,22 +42,27 @@ class Social extends React.Component {
           </div>
 
           <div className='link'>
-            <a className='icon icon-gitlab' href='https://gitlab.com/altany' title='Gitlab'>
-              <label>
-                Gitlab
-              </label>
+            <a
+              className='icon icon-gitlab'
+              href='https://gitlab.com/altany'
+              title='Gitlab'
+            >
+              <label>Gitlab</label>
             </a>
           </div>
 
           <div className='link'>
-            <a className='icon icon-stackoverflow' href='http://stackoverflow.com/story/tany4' title='Stackoverflow Story'>
+            <a
+              className='icon icon-stackoverflow'
+              href='http://stackoverflow.com/story/tany4'
+              title='Stackoverflow Story'
+            >
               <label>StackOverflow</label>
             </a>
           </div>
-
         </div>
       </div>
-    );
+    )
   }
 }
-export default Social;
+export default Social

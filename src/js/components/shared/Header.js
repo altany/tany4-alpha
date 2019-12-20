@@ -1,8 +1,8 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 class Header extends React.Component {
-  render() {
+  render () {
     return (
       <header>
         <div className='logo'>
@@ -12,16 +12,24 @@ class Header extends React.Component {
         </div>
         <div className='about'>
           <div className='social'>
-            <Link className='socialLink' to='/social'>Let's connect</Link>
+            <Link className='socialLink' to='/social'>
+              Let's connect
+            </Link>
             <div className='socialLogos'>
-              <a className='icon icon-stackoverflow' href='http://stackoverflow.com/story/tany4' />
-              <a className='icon icon-linkedin2' href='http://www.linkedin.com/in/taniapapazaf' />
+              <a
+                className='icon icon-stackoverflow'
+                href='http://stackoverflow.com/story/tany4'
+              />
+              <a
+                className='icon icon-linkedin2'
+                href='http://www.linkedin.com/in/taniapapazaf'
+              />
               <Link className='icon icon-github' to='/github' />
             </div>
           </div>
         </div>
       </header>
-    );
+    )
   }
 }
-export default Header;
+export default Header
