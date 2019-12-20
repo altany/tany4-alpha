@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 function LastCommitInfo (props) {
   let info = props.info
@@ -22,6 +23,10 @@ function LastCommit (props) {
       {' ' + props.data.date || ''}
     </div>
   )
+}
+
+LastCommit.propTypes = {
+  data: PropTypes.object
 }
 
 export default LastCommit

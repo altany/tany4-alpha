@@ -1,13 +1,11 @@
 {
-  "plugins": [
-      "react"
-  ],
+  "plugins": ["react"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
     "ecmaFeatures": {
-        "modules": true,
-        "jsx": true
+      "modules": true,
+      "jsx": true
     }
   },
   "env": {
@@ -17,5 +15,10 @@
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
     "no-console": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "16.5"
+    }
   }
 }

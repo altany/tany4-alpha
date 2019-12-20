@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Repo from './Repo'
 
 class RepoList extends React.Component {
@@ -32,6 +33,10 @@ class RepoList extends React.Component {
       </div>
     )
   }
+}
+
+RepoList.propTypes = {
+  data: PropTypes.any
 }
 
 export default RepoList

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 import Loading from 'react-loading'
 import ShowError from './ShowError.js'
@@ -71,4 +72,10 @@ class Fetcher extends React.Component {
   }
 }
 
+Fetcher.propTypes = {
+  children: PropTypes.node,
+  url: PropTypes.string,
+  showDefaultError: PropTypes.bool,
+  errorMessage: PropTypes.string
+}
 export default Fetcher

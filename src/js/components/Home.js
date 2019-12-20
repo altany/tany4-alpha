@@ -13,7 +13,7 @@ class Home extends React.Component {
             <h1>Tania Papazafeiropoulou</h1>
             <h2>Web Developer</h2>
             <div className='statement'>
-              <p>Hi, I'm Tania and I love beautiful and engaging web apps!</p>
+              <p>{`Hi, I'm Tania and I love beautiful and engaging web apps!</p>`}</p>
               <p>
                 I enjoy building captivating UIs that make the experience easy
                 and fun. My favourite technologies at the moment are Angular 2,

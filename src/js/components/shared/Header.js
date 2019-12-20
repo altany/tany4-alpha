@@ -13,7 +13,7 @@ class Header extends React.Component {
         <div className='about'>
           <div className='social'>
             <Link className='socialLink' to='/social'>
-              Let's connect
+              {`Let's connect`}
             </Link>
             <div className='socialLogos'>
               <a
