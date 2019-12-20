@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Fetcher from '../shared/Fetcher.js'
 import LastCommit from './LastCommit.js'
 
@@ -9,6 +10,11 @@ function ReadMe (props) {
   return (
     <div className='readme' dangerouslySetInnerHTML={{ __html: props.data }} />
   )
+}
+
+ReadMe.propTypes = {
+  data: PropTypes.string,
+  error: PropTypes.string
 }
 
 class Repo extends React.Component {
@@ -22,7 +28,7 @@ class Repo extends React.Component {
     this.toggleExpand = this.toggleExpand.bind(this)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.expandStatus !== this.props.expandStatus) {
       this.setState({
         isExpanded: nextProps.expandStatus
@@ -66,6 +72,11 @@ class Repo extends React.Component {
       </div>
     )
   }
+}
+
+Repo.propTypes = {
+  expandStatus: PropTypes.bool,
+  repo: PropTypes.object
 }
 
 export default Repo

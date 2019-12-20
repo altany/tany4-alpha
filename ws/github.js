@@ -149,7 +149,7 @@ router.use(function (req, res, next) {
   err.status = 404
   next(err)
 })
-router.use(function (err, req, res, next) {
+router.use(function (err, req, res) {
   res.sendStatus(err.status || 500)
 })
 module.exports = router
