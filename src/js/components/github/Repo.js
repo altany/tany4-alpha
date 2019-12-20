@@ -17,7 +17,7 @@ ReadMe.propTypes = {
   error: PropTypes.string
 }
 
-class Repo extends React.Component {
+class Repo extends React.PureComponent {
   constructor (props) {
     super(props)
 
@@ -28,10 +28,10 @@ class Repo extends React.Component {
     this.toggleExpand = this.toggleExpand.bind(this)
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
-    if (nextProps.expandStatus !== this.props.expandStatus) {
+  componentDidUpdate(prevProps) {
+    if (this.props.expandStatus !== prevProps.expandStatus) {
       this.setState({
-        isExpanded: nextProps.expandStatus
+        isExpanded: this.props.expandStatus
       })
     }
   }
