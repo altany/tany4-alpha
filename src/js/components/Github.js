@@ -9,7 +9,7 @@ class Github extends React.Component {
         <p className='intro'>
           {'Check out my Github profile on '}
           <a href='http://www.github.com/altany'>
-            <img src='https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png' title='altany on Github' />
+            <img src='https://github.githubassets.com/images/modules/logos_page/Octocat.png' title='github.com/altany' />
           </a>
         </p>
 
