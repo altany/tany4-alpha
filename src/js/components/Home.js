@@ -13,17 +13,12 @@ class Home extends React.Component {
             <h1>Tania Papazafeiropoulou</h1>
             <h2>Web Developer</h2>
             <div className='statement'>
-              <p>{`Hi, I'm Tania and I love beautiful and engaging web apps!</p>`}</p>
+              <p>{`Hi, I'm Tania and I love beautiful and engaging web apps!`}</p>
               <p>
-                I enjoy building captivating UIs that make the experience easy
-                and fun. My favourite technologies at the moment are Angular 2,
-                React and Node.js. Lately, I have been working with Redux, Ionic
-                2 and React Native and have been exploring TDD using tools like
-                Mocha.
+                I enjoy building captivating UIs that make user experience easy and fun. My favourite technologies at the moment are React / React Native, Redux and Node.js. Previously, I have worked with Angular 2 and Ionic 2.
               </p>
               <p>
-                I currently work as a contractor Front End Developer using
-                React, Angular2, Sass, Ionic 2 and more.
+                I am currently working for <a target='blank' href='https://olioex.com/'>OLIO</a> as a React Native developer. This allows me to do my part in reducing social inequality and environmental waste, while at the same time writing sick code!
               </p>
             </div>
             <Link to='/social' className='connect'>
