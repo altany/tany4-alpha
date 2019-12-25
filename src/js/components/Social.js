@@ -44,7 +44,7 @@ class Social extends React.Component {
           <div className='link'>
             <a
               className='icon icon-gitlab'
-              href='https://gitlab.com/altany'
+              href='https://gitlab.com/users/altany/groups'
               title='Gitlab'
             >
               <label>Gitlab</label>
