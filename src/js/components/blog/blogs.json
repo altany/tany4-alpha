@@ -1,0 +1,8 @@
+[
+  {
+    "id": "mocking-react-native-0.61-modules-with-jest",
+    "title": "Mocking with Jest and React-native 0.61",
+    "subtitle": "Showcasing how we were able to properly mock our react-native modules while upgrading to 0.61",
+    "extension": "png"
+  }
+]

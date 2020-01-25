@@ -17,6 +17,16 @@ body
 		.logo
 			float: left
 			width: 250px
+		.blog
+			float: right
+			padding: 20px 0 30px 30px
+			text-align: right
+			@include breakpoint(phablet)
+				padding: 20px 0 30px 30px
+			.socialLink
+			.blogLink
+				color: darkmagenta
+				font-size: 20px
 		.about
 			float: right
 			+transition(all 200ms ease-in-out)
@@ -103,20 +113,19 @@ body.no-touch
 // Header on devices with touch
 body.touch
 	header
+		.blog
 		.about
 			display: block
 			width: 200px
-			.socialLink
-				display: none
+			
 			.socialLogos
-				text-align: right
-				a
-					margin-left: 18px
+				display: none
 		@include breakpoint(laptop)
 			.logo
 				max-width: 200px
 		@include breakpoint(mobileonly)
 			.logo
 				width: 160px
-			.about
-				width: 100%
+			.blog
+				padding: 0
+    			width: 200px

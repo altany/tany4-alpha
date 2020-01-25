@@ -1,83 +1,83 @@
-let path = require('path')
-var webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+let path = require("path");
+var webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let config = {
-  context: path.join(__dirname, 'src'),
+  context: path.join(__dirname, "src"),
   output: {
-    filename: 'bundle.js',
-    publicPath: path.join(__dirname, 'www')
+    filename: "bundle.js",
+    publicPath: path.join(__dirname, "www")
   },
   module: {
     rules: [
       {
         test: /\.jsx|\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ["babel-loader"]
       },
       {
         test: /\.sass$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       },
       {
         test: /\.(eot|svg|ttf|woff)/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: 'fonts/[name].[ext]'
+          name: "fonts/[name].[ext]"
         }
       }
     ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: "style.css",
       disable: false,
       allChunks: true
     })
   ],
   resolve: {
-    modules: [path.join(__dirname), 'node_modules']
+    modules: [path.join(__dirname), "node_modules"]
   }
-}
+};
 
 module.exports = [
   {
     output: {
-      filename: './dist-amd.js',
-      libraryTarget: 'amd'
+      filename: "./dist-amd.js",
+      libraryTarget: "amd"
     },
-    entry: './app.js',
-    mode: 'production'
+    entry: "./app.js",
+    mode: "production"
   },
   {
     output: {
-      filename: './dist-commonjs.js',
-      libraryTarget: 'commonjs'
+      filename: "./dist-commonjs.js",
+      libraryTarget: "commonjs"
     },
-    entry: './app.js',
-    mode: 'production'
+    entry: "./app.js",
+    mode: "production"
   }
-]
+];
 module.exports = (env, argv) => {
-  config.mode = (argv && argv.mode) || 'production'
-  if (config.mode === 'production') {
+  config.mode = (argv && argv.mode) || "production";
+  if (config.mode === "production") {
     config.entry = {
-      app: ['./js/main.js']
-    }
-    config.devtool = 'source-map'
-    config.output.path = path.join(__dirname, 'www')
+      app: ["./js/App.js"]
+    };
+    config.devtool = "source-map";
+    config.output.path = path.join(__dirname, "www");
   }
-  if (config.mode === 'development') {
+  if (config.mode === "development") {
     config.entry = {
-      app: ['webpack-hot-middleware/client', './js/main.js']
-    }
-    config.devtool = 'cheap-module-source-map'
-    config.output.path = '/'
+      app: ["webpack-hot-middleware/client", "./js/App.js"]
+    };
+    config.devtool = "cheap-module-source-map";
+    config.output.path = "/";
     config.plugins.push(
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin()
-    )
+    );
   }
 
-  return config
-}
+  return config;
+};
