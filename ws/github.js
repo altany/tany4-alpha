@@ -21,10 +21,11 @@ let clientID = process.env.GITHUB_CLIENTID
 let clientSecret = process.env.GITHUB_SECRET
 
 let host = 'https://api.github.com/'
-let auth = 'client_id=' + clientID + '&client_secret=' + clientSecret
+let auth = new Buffer(`${clientID}:${clientSecret}`).toString('base64')
 let options = {
   headers: {
-    'User-Agent': 'altany'
+    'User-Agent': 'altany',
+    'Authorization': 'Basic ' + auth
   }
 }
 
@@ -54,7 +55,7 @@ function formatErrorResponse ({
 }
 
 router.get('/repos', function (req, res) {
-  options.url = host + 'users/altany/repos?sort=created&' + auth
+  options.url = `${host}users/altany/repos?sort=created`
   request(options, function (error, response, body) {
     if (error) {
       return formatErrorResponse({ response: res, message: error })
@@ -73,7 +74,7 @@ router.get('/repos', function (req, res) {
 
 router.get('/readme/:repo', function (req, res) {
   options.url =
-    host + 'repos/altany/' + req.params.repo + '/contents/README.md?' + auth
+    host + 'repos/altany/' + req.params.repo + '/contents/README.md'
   options.headers['Accept'] = 'application/vnd.github.' + apiVersion + '.raw'
   request(options, function (error, response, body) {
     if (error) {
@@ -106,7 +107,7 @@ router.get('/readme/:repo', function (req, res) {
 })
 
 router.get('/last-commit/:repo', function (req, res) {
-  options.url = host + 'repos/altany/' + req.params.repo + '/commits?' + auth
+  options.url = host + 'repos/altany/' + req.params.repo + '/commits'
   request(options, function (error, response, body) {
     if (error) {
       return formatErrorResponse({
